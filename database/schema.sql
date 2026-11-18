@@ -36,6 +36,10 @@ CREATE TABLE alternativa (
     UNIQUE (questao_id, letra)
 );
 
+CREATE UNIQUE INDEX uq_alternativa_correta_questao
+    ON alternativa (questao_id)
+    WHERE correta = TRUE;
+
 CREATE TABLE avaliacao (
     id SERIAL PRIMARY KEY,
     titulo VARCHAR(150) NOT NULL,
@@ -44,7 +48,8 @@ CREATE TABLE avaliacao (
     data_aplicacao DATE NOT NULL,
     hora_inicio TIME NOT NULL,
     hora_fim TIME NOT NULL,
-    criado_por INTEGER NOT NULL REFERENCES usuario(id) ON DELETE RESTRICT
+    criado_por INTEGER NOT NULL REFERENCES usuario(id) ON DELETE RESTRICT,
+    CHECK (hora_fim > hora_inicio)
 );
 
 CREATE TABLE avaliacao_questao (
