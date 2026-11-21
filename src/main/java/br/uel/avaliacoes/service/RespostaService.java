@@ -107,6 +107,12 @@ public class RespostaService {
         Resposta r = respostaDAO.buscarPorId(respostaId)
                 .orElseThrow(() -> new NoSuchElementException("Resposta nao encontrada."));
 
+        BigDecimal valorMaximo = avaliacaoDAO.buscarValorQuestao(r.getAvaliacaoId(), r.getQuestaoId())
+                .orElseThrow(() -> new NoSuchElementException("Questao nao vinculada a avaliacao."));
+        if (nota.compareTo(valorMaximo) > 0) {
+            throw new IllegalArgumentException("A nota nao pode ultrapassar o valor maximo da questao (" + valorMaximo + ").");
+        }
+
         respostaDAO.atualizarNotaDiscursiva(respostaId, nota, professorId);
 
         int pendentes = avaliacaoDAO.contarRespostasSemNota(r.getAvaliacaoId(), r.getUsuarioId());
