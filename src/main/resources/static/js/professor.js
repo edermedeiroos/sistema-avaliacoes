@@ -1,0 +1,324 @@
+let questoesCache = [];
+let turmasCache = [];
+let avaliacaoAtribuicaoId = null;
+
+function toggleQuestaoForm(force) {
+  const card = document.getElementById("novaQuestaoCard");
+  const show = typeof force === "boolean" ? force : card.classList.contains("hidden");
+  card.classList.toggle("hidden", !show);
+}
+
+function toggleAlternativasBox() {
+  const tipo = document.getElementById("qTipo").value;
+  document.getElementById("alternativasBox").classList.toggle("hidden", tipo !== "MULTIPLA_ESCOLHA");
+}
+
+async function carregarQuestoes() {
+  const tipo = document.getElementById("filtroQuestaoTipo").value;
+  const busca = document.getElementById("filtroQuestaoTexto").value.trim();
+  const params = new URLSearchParams();
+  if (tipo) params.set("tipo", tipo);
+  if (busca) params.set("busca", busca);
+  const query = params.toString() ? `?${params.toString()}` : "";
+
+  try {
+    const lista = await apiGet(`/api/questoes${query}`);
+    if (!tipo && !busca) {
+      questoesCache = lista;
+    }
+    const tbody = document.getElementById("tabelaQuestoesBody");
+    if (lista.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="7" class="text-muted">Nenhuma questao encontrada.</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = lista.map(q => `
+      <tr>
+        <td>#${q.id}</td>
+        <td>${esc(q.enunciado)}</td>
+        <td>
+          <span class="badge ${q.tipo === "MULTIPLA_ESCOLHA" ? "badge-info" : "badge-neutral"}">
+            ${q.tipo === "MULTIPLA_ESCOLHA" ? "Múltipla Escolha" : "Texto Livre"}
+          </span>
+        </td>
+        <td>${esc(q.disciplina)}</td>
+        <td>${esc(q.dificuldade)}</td>
+        <td>${q.usosEmAvaliacoes > 0 ? `${q.usosEmAvaliacoes} aval.` : `<span class="badge badge-warn">Não usada</span>`}</td>
+        <td>
+          ${q.usosEmAvaliacoes === 0
+            ? `<button class="btn btn-danger btn-sm" onclick="excluirQuestao(${q.id})">Excluir</button>`
+            : `<span class="text-muted">Em uso</span>`}
+        </td>
+      </tr>
+    `).join("");
+  } catch (err) {
+    showToast(err.message, true);
+  }
+}
+
+async function salvarQuestao(e) {
+  e.preventDefault();
+  const tipo = document.getElementById("qTipo").value;
+  const payload = {
+    enunciado: document.getElementById("qEnunciado").value.trim(),
+    tipo,
+    disciplina: document.getElementById("qDisciplina").value.trim(),
+    dificuldade: document.getElementById("qDificuldade").value,
+    criadoPor: usuarioLogado.id,
+    alternativas: []
+  };
+
+  if (tipo === "MULTIPLA_ESCOLHA") {
+    const correta = document.querySelector('input[name="altCorreta"]:checked').value;
+    payload.alternativas = ["A", "B", "C", "D"].map(letra => ({
+      letra,
+      texto: document.getElementById(`alt${letra}`).value.trim(),
+      correta: letra === correta
+    }));
+  }
+
+  try {
+    await apiPost("/api/questoes", payload);
+    e.target.reset();
+    document.getElementById("qDisciplina").value = "Banco de Dados I";
+    toggleAlternativasBox();
+    toggleQuestaoForm(false);
+    await carregarQuestoes();
+    showToast("Questão cadastrada com sucesso.");
+  } catch (err) {
+    showToast(err.message, true);
+  }
+}
+
+async function excluirQuestao(id) {
+  if (!confirm(`Excluir a questão #${id}?`)) return;
+  try {
+    await apiDelete(`/api/questoes/${id}`);
+    await carregarQuestoes();
+    showToast("Questão removida.");
+  } catch (err) {
+    showToast(err.message, true);
+  }
+}
+
+async function carregarTelaAvaliacoes() {
+  try {
+    const [avaliacoes, turmas, questoes] = await Promise.all([
+      apiGet("/api/avaliacoes"),
+      apiGet("/api/turmas"),
+      apiGet("/api/questoes")
+    ]);
+    turmasCache = turmas;
+    questoesCache = questoes;
+
+    const selectNova = document.getElementById("avTurma");
+    selectNova.innerHTML = `<option value="">-- Selecionar depois --</option>` +
+      turmas.map(t => `<option value="${t.id}">${esc(t.codigo)} - ${esc(t.nome)}</option>`).join("");
+
+    const selectAtr = document.getElementById("atribuirTurmaSelect");
+    selectAtr.innerHTML = turmas.map(t => `<option value="${t.id}">${esc(t.codigo)} - ${esc(t.nome)}</option>`).join("");
+
+    renderAvaliacoesTabela(avaliacoes);
+    renderQuestionPicker();
+  } catch (err) {
+    showToast(err.message, true);
+  }
+}
+
+function renderAvaliacoesTabela(avaliacoes) {
+  const tbody = document.getElementById("tabelaAvaliacoesBody");
+  if (avaliacoes.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" class="text-muted">Nenhuma avaliação cadastrada.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = avaliacoes.map(a => `
+    <tr>
+      <td><strong>${esc(a.titulo)}</strong></td>
+      <td><span class="badge badge-neutral">${esc(a.tipo)}</span></td>
+      <td>${esc(a.dataAplicacao)} | ${esc(a.horaInicio).slice(0, 5)} às ${esc(a.horaFim).slice(0, 5)}</td>
+      <td>${a.totalQuestoes}</td>
+      <td>${Number(a.valorTotal).toFixed(1)} pts</td>
+      <td>${a.totalRespondidas} / ${a.totalAtribuidos}</td>
+      <td>
+        <button class="btn btn-secondary btn-sm" onclick="abrirAtribuicao(${a.id}, '${esc(a.titulo).replace(/'/g, "\\'")}')">
+          Atribuir / Ver Alunos
+        </button>
+      </td>
+    </tr>
+  `).join("");
+}
+
+function toggleAvaliacaoForm(force) {
+  const card = document.getElementById("novaAvaliacaoCard");
+  const show = typeof force === "boolean" ? force : card.classList.contains("hidden");
+  card.classList.toggle("hidden", !show);
+  if (show) {
+    const hoje = new Date().toISOString().slice(0, 10);
+    if (!document.getElementById("avData").value) {
+      document.getElementById("avData").value = hoje;
+    }
+    renderQuestionPicker();
+  }
+}
+
+function renderQuestionPicker() {
+  const box = document.getElementById("pickerQuestoes");
+  box.innerHTML = questoesCache.map(q => `
+    <div class="question-picker-row">
+      <label>
+        <input type="checkbox" class="pick-q-chk" value="${q.id}" onchange="atualizarTotalAvaliacao()" />
+        <span><strong>#${q.id}</strong> [${q.tipo === "MULTIPLA_ESCOLHA" ? "Objetiva" : "Discursiva"}] ${esc(q.enunciado)}</span>
+      </label>
+      <input type="number" class="pick-q-val" data-qid="${q.id}" min="0.5" step="0.5" value="2.0" oninput="atualizarTotalAvaliacao()" />
+    </div>
+  `).join("");
+  atualizarTotalAvaliacao();
+}
+
+function atualizarTotalAvaliacao() {
+  let total = 0;
+  let count = 0;
+  document.querySelectorAll(".pick-q-chk:checked").forEach(chk => {
+    count++;
+    const valInput = document.querySelector(`.pick-q-val[data-qid="${chk.value}"]`);
+    total += parseFloat(valInput.value || 0);
+  });
+  document.getElementById("avTotalPreview").textContent = `${count} questão(ões) | Total: ${total.toFixed(1)} pts`;
+}
+
+async function salvarAvaliacao(e) {
+  e.preventDefault();
+  const itens = [];
+  let ordem = 1;
+  document.querySelectorAll(".pick-q-chk:checked").forEach(chk => {
+    const qId = parseInt(chk.value, 10);
+    const valor = parseFloat(document.querySelector(`.pick-q-val[data-qid="${qId}"]`).value || 0);
+    itens.push({ questaoId: qId, ordem: ordem++, valor });
+  });
+
+  if (itens.length === 0) {
+    showToast("Selecione ao menos uma questão.", true);
+    return;
+  }
+
+  const turmaVal = document.getElementById("avTurma").value;
+  const payload = {
+    titulo: document.getElementById("avTitulo").value.trim(),
+    descricao: document.getElementById("avDesc").value.trim(),
+    tipo: document.getElementById("avTipo").value,
+    dataAplicacao: document.getElementById("avData").value,
+    horaInicio: document.getElementById("avInicio").value,
+    horaFim: document.getElementById("avFim").value,
+    criadoPor: usuarioLogado.id,
+    turmaId: turmaVal ? parseInt(turmaVal, 10) : null,
+    itens
+  };
+
+  try {
+    await apiPost("/api/avaliacoes", payload);
+    e.target.reset();
+    toggleAvaliacaoForm(false);
+    await carregarTelaAvaliacoes();
+    showToast("Avaliação criada com sucesso.");
+  } catch (err) {
+    showToast(err.message, true);
+  }
+}
+
+async function abrirAtribuicao(avaliacaoId, titulo) {
+  avaliacaoAtribuicaoId = avaliacaoId;
+  document.getElementById("atribuirTitulo").textContent = `Atribuições - ${titulo}`;
+  document.getElementById("atribuirPanel").classList.remove("hidden");
+  await carregarAtribuidos(avaliacaoId);
+}
+
+function fecharAtribuicao() {
+  avaliacaoAtribuicaoId = null;
+  document.getElementById("atribuirPanel").classList.add("hidden");
+}
+
+async function carregarAtribuidos(avaliacaoId) {
+  try {
+    const lista = await apiGet(`/api/avaliacoes/${avaliacaoId}/atribuidos`);
+    const tbody = document.getElementById("atribuidosBody");
+    if (lista.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="4" class="text-muted">Nenhum aluno atribuído ainda.</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = lista.map(a => {
+      const notaTxt = a.notaObtida !== null && a.notaObtida !== undefined
+        ? `${Number(a.notaObtida).toFixed(1)} / ${Number(a.valorTotal).toFixed(1)}`
+        : "-";
+      return `
+        <tr>
+          <td>${esc(a.usuarioNome)}</td>
+          <td>${esc(a.turmaCodigo || "-")}</td>
+          <td><span class="badge ${a.status === "CORRIGIDA" ? "badge-ok" : a.status === "RESPONDIDA" ? "badge-info" : "badge-warn"}">${esc(a.status)}</span></td>
+          <td>${notaTxt}</td>
+        </tr>
+      `;
+    }).join("");
+  } catch (err) {
+    showToast(err.message, true);
+  }
+}
+
+async function confirmarAtribuicaoTurma() {
+  if (!avaliacaoAtribuicaoId) return;
+  const turmaId = parseInt(document.getElementById("atribuirTurmaSelect").value, 10);
+  try {
+    await apiPost(`/api/avaliacoes/${avaliacaoAtribuicaoId}/atribuir`, { turmaId });
+    await carregarAtribuidos(avaliacaoAtribuicaoId);
+    await carregarTelaAvaliacoes();
+    showToast("Turma atribuída à avaliação.");
+  } catch (err) {
+    showToast(err.message, true);
+  }
+}
+
+async function carregarCorrecoesPendentes() {
+  const container = document.getElementById("correcaoContainer");
+  try {
+    const lista = await apiGet("/api/correcoes/pendentes");
+    if (lista.length === 0) {
+      container.innerHTML = `<div class="card"><p class="text-muted" style="margin:0;">Nenhuma resposta discursiva aguardando correção.</p></div>`;
+      return;
+    }
+    container.innerHTML = lista.map(c => `
+      <div class="card">
+        <div class="panel-header" style="margin-bottom:8px;">
+          <div><strong>${esc(c.alunoNome)}</strong> <span class="text-muted">(${esc(c.turmaCodigo)} - ${esc(c.avaliacaoTitulo)})</span></div>
+          <span class="badge badge-warn">Máx. ${Number(c.valorMaximo).toFixed(1)} pts</span>
+        </div>
+        <p style="margin:0 0 8px;"><strong>Questão:</strong> ${esc(c.enunciado)}</p>
+        <div class="answer-box">
+          <strong>Resposta do aluno:</strong><br/>${esc(c.textoResposta)}
+        </div>
+        <div class="form-actions">
+          <label style="margin:0;" for="nota_${c.respostaId}">Nota:</label>
+          <input type="number" id="nota_${c.respostaId}" min="0" max="${c.valorMaximo}" step="0.5" value="${Number(c.valorMaximo).toFixed(1)}" style="width:100px;" />
+          <button class="btn btn-primary btn-sm" onclick="salvarCorrecao(${c.respostaId})">Salvar Nota</button>
+        </div>
+      </div>
+    `).join("");
+  } catch (err) {
+    showToast(err.message, true);
+  }
+}
+
+async function salvarCorrecao(respostaId) {
+  const nota = parseFloat(document.getElementById(`nota_${respostaId}`).value);
+  if (isNaN(nota)) {
+    showToast("Informe uma nota válida.", true);
+    return;
+  }
+  try {
+    await apiPut(`/api/correcoes/${respostaId}`, {
+      nota,
+      professorId: usuarioLogado.id
+    });
+    await carregarCorrecoesPendentes();
+    showToast("Nota registrada com sucesso.");
+  } catch (err) {
+    showToast(err.message, true);
+  }
+}
