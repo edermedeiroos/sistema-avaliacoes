@@ -102,10 +102,11 @@ async function excluirQuestao(id) {
 
 async function carregarTelaAvaliacoes() {
   try {
-    const [avaliacoes, turmas, questoes] = await Promise.all([
+    const [avaliacoes, turmas, questoes, alunos] = await Promise.all([
       apiGet("/api/avaliacoes"),
       apiGet("/api/turmas"),
-      apiGet("/api/questoes")
+      apiGet("/api/questoes"),
+      apiGet("/api/usuarios?perfil=ALUNO")
     ]);
     turmasCache = turmas;
     questoesCache = questoes;
@@ -116,6 +117,9 @@ async function carregarTelaAvaliacoes() {
 
     const selectAtr = document.getElementById("atribuirTurmaSelect");
     selectAtr.innerHTML = turmas.map(t => `<option value="${t.id}">${esc(t.codigo)} - ${esc(t.nome)}</option>`).join("");
+
+    const selectAluno = document.getElementById("atribuirAlunoSelect");
+    selectAluno.innerHTML = alunos.map(u => `<option value="${u.id}">${esc(u.nome)} (${esc(u.turmaCodigo || "-")})</option>`).join("");
 
     renderAvaliacoesTabela(avaliacoes);
     renderQuestionPicker();
@@ -270,6 +274,19 @@ async function confirmarAtribuicaoTurma() {
     await carregarAtribuidos(avaliacaoAtribuicaoId);
     await carregarTelaAvaliacoes();
     showToast("Turma atribuída à avaliação.");
+  } catch (err) {
+    showToast(err.message, true);
+  }
+}
+
+async function confirmarAtribuicaoAluno() {
+  if (!avaliacaoAtribuicaoId) return;
+  const alunoId = parseInt(document.getElementById("atribuirAlunoSelect").value, 10);
+  try {
+    await apiPost(`/api/avaliacoes/${avaliacaoAtribuicaoId}/atribuir`, { usuarioIds: [alunoId] });
+    await carregarAtribuidos(avaliacaoAtribuicaoId);
+    await carregarTelaAvaliacoes();
+    showToast("Aluno atribuído à avaliação.");
   } catch (err) {
     showToast(err.message, true);
   }
