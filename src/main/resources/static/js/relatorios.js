@@ -47,13 +47,17 @@ async function carregarRelatorio1() {
   const df = document.getElementById("rep1DataFim").value;
   const tipo = document.getElementById("rep1Tipo").value;
   const params = new URLSearchParams();
-  params.set("dataInicio", di);
-  params.set("dataFim", df);
-  params.set("tipos", tipo);
+  if (di) params.set("dataInicio", di);
+  if (df) params.set("dataFim", df);
+  if (tipo) params.set("tipos", tipo);
+  const query = params.toString() ? `?${params.toString()}` : "";
 
   try {
-    const dados = await apiGet(`/api/relatorios/medias-avaliacoes?${params.toString()}`);
-    document.getElementById("rep1Body").innerHTML = dados.map(d => `
+    const dados = await apiGet(`/api/relatorios/medias-avaliacoes${query}`);
+    const tbody = document.getElementById("rep1Body");
+    tbody.innerHTML = dados.length === 0
+      ? `<tr><td colspan="6" class="text-muted">Nenhum resultado para os filtros informados.</td></tr>`
+      : dados.map(d => `
       <tr>
         <td>${esc(d.titulo)}</td>
         <td>${esc(d.tipo)}</td>
