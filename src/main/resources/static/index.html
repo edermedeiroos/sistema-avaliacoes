@@ -38,22 +38,22 @@
       <div class="login-box">
         <h1>Entrar no Sistema</h1>
         <p class="sub">Avaliação de Aprendizagem (Provas, Simulados e Quizzes)</p>
-        <form onsubmit="handleLogin(event)">
+        <form onsubmit="handleLogin(event)" autocomplete="off">
           <div class="form-group">
             <label for="loginEmail">E-mail institucional</label>
-            <input type="email" id="loginEmail" required />
+            <input type="email" id="loginEmail" autocomplete="off" required />
           </div>
           <div class="form-group">
             <label for="loginPass">Senha</label>
-            <input type="password" id="loginPass" required />
+            <input type="password" id="loginPass" autocomplete="new-password" required />
           </div>
           <button type="submit" class="btn btn-primary btn-block">Entrar</button>
         </form>
         <div class="quick-accounts">
-          <small>Contas de teste (senha: 123456):</small>
+          <small>Contas de teste (senha: Uel@Bd2026):</small>
           <div class="btn-group">
-            <button type="button" class="btn btn-secondary btn-sm" onclick="preencherLogin('anderson@uel.br', '123456')">Prof. Anderson</button>
-            <button type="button" class="btn btn-secondary btn-sm" onclick="preencherLogin('ana.paula@uel.br', '123456')">Ana Paula (Aluna)</button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="preencherLogin('anderson@uel.br', 'Uel@Bd2026')">Prof. Anderson</button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="preencherLogin('ana.paula@uel.br', 'Uel@Bd2026')">Ana Paula (Aluna)</button>
           </div>
         </div>
       </div>

@@ -56,7 +56,7 @@ mvn spring-boot:run
 
 4. Acesse `http://localhost:8080`.
 
-Contas para teste (senha `123456` para todas):
+Contas para teste (senha `Uel@Bd2026` para todas):
 - Professor: `anderson@uel.br`
 - Aluna (`CC-2026`): `ana.paula@uel.br`
 

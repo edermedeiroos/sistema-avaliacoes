@@ -1,71 +1,72 @@
--- Dados iniciais para testes e relatorios
+-- Dados iniciais para testes e relatórios
+SET client_encoding = 'UTF8';
 
 INSERT INTO turma (id, codigo, nome, ano_semestre) VALUES
-(1, 'CC-2026', 'Ciencia da Computacao', '2026/2'),
+(1, 'CC-2026', 'Ciência da Computação', '2026/2'),
 (2, 'ES-2026', 'Engenharia de Software', '2026/2'),
-(3, 'SI-2026', 'Sistemas de Informacao', '2026/2');
+(3, 'SI-2026', 'Sistemas de Informação', '2026/2');
 
 INSERT INTO usuario (id, nome, email, senha, perfil, turma_id, ativo) VALUES
-(1, 'Prof. Anderson Paulo', 'anderson@uel.br', '123456', 'PROFESSOR', NULL, TRUE),
-(2, 'Profa. Camila Nogueira', 'camila@uel.br', '123456', 'PROFESSOR', NULL, TRUE),
-(3, 'Prof. Ricardo Mendes', 'ricardo@uel.br', '123456', 'PROFESSOR', NULL, TRUE),
-(4, 'Ana Paula Oliveira', 'ana.paula@uel.br', '123456', 'ALUNO', 1, TRUE),
-(5, 'Bruno Henrique Costa', 'bruno.costa@uel.br', '123456', 'ALUNO', 1, TRUE),
-(6, 'Caio Vinicius Lima', 'caio.lima@uel.br', '123456', 'ALUNO', 1, TRUE),
-(7, 'Daniela Ferreira', 'daniela.ferreira@uel.br', '123456', 'ALUNO', 1, TRUE),
-(8, 'Eduardo Alves', 'eduardo.alves@uel.br', '123456', 'ALUNO', 1, TRUE),
-(9, 'Fernanda Ribeiro', 'fernanda.ribeiro@uel.br', '123456', 'ALUNO', 1, TRUE),
-(10, 'Gabriela Rocha', 'gabriela.rocha@uel.br', '123456', 'ALUNO', 1, TRUE),
-(11, 'Henrique Martins', 'henrique.martins@uel.br', '123456', 'ALUNO', 1, TRUE),
-(12, 'Isabela Carvalho', 'isabela.carvalho@uel.br', '123456', 'ALUNO', 2, TRUE),
-(13, 'Joao Pedro Souza', 'joao.souza@uel.br', '123456', 'ALUNO', 2, TRUE),
-(14, 'Karina Teixeira', 'karina.teixeira@uel.br', '123456', 'ALUNO', 2, TRUE),
-(15, 'Lucas Gabriel Dias', 'lucas.dias@uel.br', '123456', 'ALUNO', 2, TRUE),
-(16, 'Mariana Barbosa', 'mariana.barbosa@uel.br', '123456', 'ALUNO', 2, TRUE),
-(17, 'Natalia Cardoso', 'natalia.cardoso@uel.br', '123456', 'ALUNO', 2, TRUE),
-(18, 'Otavio Augusto Pereira', 'otavio.pereira@uel.br', '123456', 'ALUNO', 2, TRUE),
-(19, 'Patricia Gomes', 'patricia.gomes@uel.br', '123456', 'ALUNO', 3, TRUE),
-(20, 'Rafael Moreira', 'rafael.moreira@uel.br', '123456', 'ALUNO', 3, TRUE),
-(21, 'Sabrina Monteiro', 'sabrina.monteiro@uel.br', '123456', 'ALUNO', 3, TRUE),
-(22, 'Thiago Nogueira', 'thiago.nogueira@uel.br', '123456', 'ALUNO', 3, TRUE),
-(23, 'Vanessa Castro', 'vanessa.castro@uel.br', '123456', 'ALUNO', 3, TRUE),
-(24, 'Wesley Duarte', 'wesley.duarte@uel.br', '123456', 'ALUNO', 3, TRUE);
+(1, 'Prof. Anderson Paulo', 'anderson@uel.br', 'Uel@Bd2026', 'PROFESSOR', NULL, TRUE),
+(2, 'Profa. Camila Nogueira', 'camila@uel.br', 'Uel@Bd2026', 'PROFESSOR', NULL, TRUE),
+(3, 'Prof. Ricardo Mendes', 'ricardo@uel.br', 'Uel@Bd2026', 'PROFESSOR', NULL, TRUE),
+(4, 'Ana Paula Oliveira', 'ana.paula@uel.br', 'Uel@Bd2026', 'ALUNO', 1, TRUE),
+(5, 'Bruno Henrique Costa', 'bruno.costa@uel.br', 'Uel@Bd2026', 'ALUNO', 1, TRUE),
+(6, 'Caio Vinícius Lima', 'caio.lima@uel.br', 'Uel@Bd2026', 'ALUNO', 1, TRUE),
+(7, 'Daniela Ferreira', 'daniela.ferreira@uel.br', 'Uel@Bd2026', 'ALUNO', 1, TRUE),
+(8, 'Eduardo Alves', 'eduardo.alves@uel.br', 'Uel@Bd2026', 'ALUNO', 1, TRUE),
+(9, 'Fernanda Ribeiro', 'fernanda.ribeiro@uel.br', 'Uel@Bd2026', 'ALUNO', 1, TRUE),
+(10, 'Gabriela Rocha', 'gabriela.rocha@uel.br', 'Uel@Bd2026', 'ALUNO', 1, TRUE),
+(11, 'Henrique Martins', 'henrique.martins@uel.br', 'Uel@Bd2026', 'ALUNO', 1, TRUE),
+(12, 'Isabela Carvalho', 'isabela.carvalho@uel.br', 'Uel@Bd2026', 'ALUNO', 2, TRUE),
+(13, 'João Pedro Souza', 'joao.souza@uel.br', 'Uel@Bd2026', 'ALUNO', 2, TRUE),
+(14, 'Karina Teixeira', 'karina.teixeira@uel.br', 'Uel@Bd2026', 'ALUNO', 2, TRUE),
+(15, 'Lucas Gabriel Dias', 'lucas.dias@uel.br', 'Uel@Bd2026', 'ALUNO', 2, TRUE),
+(16, 'Mariana Barbosa', 'mariana.barbosa@uel.br', 'Uel@Bd2026', 'ALUNO', 2, TRUE),
+(17, 'Natália Cardoso', 'natalia.cardoso@uel.br', 'Uel@Bd2026', 'ALUNO', 2, TRUE),
+(18, 'Otávio Augusto Pereira', 'otavio.pereira@uel.br', 'Uel@Bd2026', 'ALUNO', 2, TRUE),
+(19, 'Patrícia Gomes', 'patricia.gomes@uel.br', 'Uel@Bd2026', 'ALUNO', 3, TRUE),
+(20, 'Rafael Moreira', 'rafael.moreira@uel.br', 'Uel@Bd2026', 'ALUNO', 3, TRUE),
+(21, 'Sabrina Monteiro', 'sabrina.monteiro@uel.br', 'Uel@Bd2026', 'ALUNO', 3, TRUE),
+(22, 'Thiago Nogueira', 'thiago.nogueira@uel.br', 'Uel@Bd2026', 'ALUNO', 3, TRUE),
+(23, 'Vanessa Castro', 'vanessa.castro@uel.br', 'Uel@Bd2026', 'ALUNO', 3, TRUE),
+(24, 'Wesley Duarte', 'wesley.duarte@uel.br', 'Uel@Bd2026', 'ALUNO', 3, TRUE);
 
 INSERT INTO questao (id, enunciado, tipo, disciplina, dificuldade, criado_por) VALUES
 (1, 'Qual comando SQL cria uma nova tabela no PostgreSQL?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'FACIL', 1),
-(2, 'Qual forma normal elimina dependencias transitivas entre atributos nao-chave?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'MEDIA', 1),
-(3, 'Qual restricao garante que todos os valores de uma coluna sejam distintos?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'FACIL', 1),
-(4, 'Em SQL, qual clausula filtra grupos apos o GROUP BY?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'MEDIA', 1),
-(5, 'Qual tipo de JOIN preserva todas as linhas da tabela a esquerda mesmo sem correspondencia a direita?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'FACIL', 1),
+(2, 'Qual forma normal elimina dependências transitivas entre atributos não-chave?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'MEDIA', 1),
+(3, 'Qual restrição garante que todos os valores de uma coluna sejam distintos?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'FACIL', 1),
+(4, 'Em SQL, qual cláusula filtra grupos após o GROUP BY?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'MEDIA', 1),
+(5, 'Qual tipo de JOIN preserva todas as linhas da tabela à esquerda mesmo sem correspondência à direita?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'FACIL', 1),
 (6, 'O que acontece ao tentar excluir uma tupla pai referenciada por uma FK com ON DELETE RESTRICT?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'MEDIA', 1),
 (7, 'Qual operador SQL verifica se um valor pertence a um conjunto retornado por uma lista ou subconsulta?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'FACIL', 1),
-(8, 'Qual funcao de janela retorna a classificacao com empates deixando lacunas na numeracao?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'DIFICIL', 1),
+(8, 'Qual função de janela retorna a classificação com empates deixando lacunas na numeração?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'DIFICIL', 1),
 (9, 'Para estar na 2FN, uma tabela precisa estar na 1FN e:', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'MEDIA', 2),
-(10, 'Qual atributo na modelagem relacional nao pode conter valores nulos por definicao?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'FACIL', 2),
-(11, 'Em uma associacao N:N no DER, como ocorre o mapeamento para o modelo relacional?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'MEDIA', 2),
-(12, 'Qual clausula SQL limita a quantidade de linhas retornadas no padrao SQL usado pelo PostgreSQL?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'MEDIA', 2),
-(13, 'Qual propriedade ACID garante que uma transacao seja executada por completo ou desfeita totalmente?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'FACIL', 1),
-(14, 'Qual comando DDL altera a estrutura de uma tabela ja existente adicionando uma coluna?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'FACIL', 1),
-(15, 'Qual nivel de restricao garante que uma condicao logica booleana seja satisfeita em cada linha?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'MEDIA', 1),
-(16, 'Qual comando finaliza permanentemente as alteracoes realizadas dentro de uma transacao SQL?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'FACIL', 1),
-(17, 'Qual fase do processo de software valida se o sistema atende as necessidades reais do usuario?', 'MULTIPLA_ESCOLHA', 'Engenharia de Software', 'MEDIA', 2),
+(10, 'Qual atributo na modelagem relacional não pode conter valores nulos por definição?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'FACIL', 2),
+(11, 'Em uma associação N:N no DER, como ocorre o mapeamento para o modelo relacional?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'MEDIA', 2),
+(12, 'Qual cláusula SQL limita a quantidade de linhas retornadas no padrão SQL usado pelo PostgreSQL?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'MEDIA', 2),
+(13, 'Qual propriedade ACID garante que uma transação seja executada por completo ou desfeita totalmente?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'FACIL', 1),
+(14, 'Qual comando DDL altera a estrutura de uma tabela já existente adicionando uma coluna?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'FACIL', 1),
+(15, 'Qual nível de restrição garante que uma condição lógica booleana seja satisfeita em cada linha?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'MEDIA', 1),
+(16, 'Qual comando finaliza permanentemente as alterações realizadas dentro de uma transação SQL?', 'MULTIPLA_ESCOLHA', 'Banco de Dados I', 'FACIL', 1),
+(17, 'Qual fase do processo de software valida se o sistema atende às necessidades reais do usuário?', 'MULTIPLA_ESCOLHA', 'Engenharia de Software', 'MEDIA', 2),
 (18, 'Na arquitetura em camadas, qual camada deve concentrar as consultas SQL via JDBC?', 'MULTIPLA_ESCOLHA', 'Engenharia de Software', 'FACIL', 2),
-(19, 'Qual interface do JDBC evita SQL Injection ao parametrizar valores dinamicos?', 'MULTIPLA_ESCOLHA', 'Engenharia de Software', 'MEDIA', 2),
-(20, 'Qual principio de design recomenda que uma classe tenha apenas um motivo para mudar?', 'MULTIPLA_ESCOLHA', 'Engenharia de Software', 'DIFICIL', 2),
-(21, 'Qual estrutura de dados segue a politica FIFO (First In, First Out)?', 'MULTIPLA_ESCOLHA', 'Algoritmos e Estruturas de Dados', 'FACIL', 3),
-(22, 'Qual a complexidade de tempo media da busca binaria em um vetor ordenado de tamanho n?', 'MULTIPLA_ESCOLHA', 'Algoritmos e Estruturas de Dados', 'MEDIA', 3),
-(23, 'Qual estrutura utiliza nos ligados com chave, filho esquerdo e filho direito mantendo ordenacao?', 'MULTIPLA_ESCOLHA', 'Algoritmos e Estruturas de Dados', 'MEDIA', 3),
-(24, 'Em Java, qual bloco e executado mesmo quando ocorre uma excecao ao manipular recursos sem try-with-resources?', 'MULTIPLA_ESCOLHA', 'Engenharia de Software', 'MEDIA', 3),
-(25, 'Explique a diferenca entre as clausulas WHERE e HAVING em consultas SQL.', 'TEXTO_LIVRE', 'Banco de Dados I', 'MEDIA', 1),
-(26, 'Quando devemos usar LEFT JOIN em vez de INNER JOIN? Cite um exemplo pratico.', 'TEXTO_LIVRE', 'Banco de Dados I', 'MEDIA', 1),
+(19, 'Qual interface do JDBC evita SQL Injection ao parametrizar valores dinâmicos?', 'MULTIPLA_ESCOLHA', 'Engenharia de Software', 'MEDIA', 2),
+(20, 'Qual princípio de design recomenda que uma classe tenha apenas um motivo para mudar?', 'MULTIPLA_ESCOLHA', 'Engenharia de Software', 'DIFICIL', 2),
+(21, 'Qual estrutura de dados segue a política FIFO (First In, First Out)?', 'MULTIPLA_ESCOLHA', 'Algoritmos e Estruturas de Dados', 'FACIL', 3),
+(22, 'Qual a complexidade de tempo média da busca binária em um vetor ordenado de tamanho n?', 'MULTIPLA_ESCOLHA', 'Algoritmos e Estruturas de Dados', 'MEDIA', 3),
+(23, 'Qual estrutura utiliza nós ligados com chave, filho esquerdo e filho direito mantendo ordenação?', 'MULTIPLA_ESCOLHA', 'Algoritmos e Estruturas de Dados', 'MEDIA', 3),
+(24, 'Em Java, qual bloco é executado mesmo quando ocorre uma exceção ao manipular recursos sem try-with-resources?', 'MULTIPLA_ESCOLHA', 'Engenharia de Software', 'MEDIA', 3),
+(25, 'Explique a diferença entre as cláusulas WHERE e HAVING em consultas SQL.', 'TEXTO_LIVRE', 'Banco de Dados I', 'MEDIA', 1),
+(26, 'Quando devemos usar LEFT JOIN em vez de INNER JOIN? Cite um exemplo prático.', 'TEXTO_LIVRE', 'Banco de Dados I', 'MEDIA', 1),
 (27, 'Explique por que armazenar a nota total calculada na tabela avaliacao_usuario violaria a 3FN.', 'TEXTO_LIVRE', 'Banco de Dados I', 'DIFICIL', 1),
-(28, 'Descreva a importancia do uso de transacoes ao gravar dados em multiplas tabelas.', 'TEXTO_LIVRE', 'Engenharia de Software', 'MEDIA', 2),
-(29, 'Explique a diferenca entre ON DELETE CASCADE e ON DELETE RESTRICT em chaves estrangeiras.', 'TEXTO_LIVRE', 'Banco de Dados I', 'MEDIA', 1),
-(30, 'Quais vantagens um indice parcial traz em consultas frequentes no PostgreSQL?', 'TEXTO_LIVRE', 'Banco de Dados I', 'DIFICIL', 1),
-(31, 'Compare uma subconsulta correlacionada com uma juncao tradicional em termos de legibilidade.', 'TEXTO_LIVRE', 'Banco de Dados I', 'DIFICIL', 2),
-(32, 'Qual a diferenca entre testes unitarios e testes de integracao em uma API REST?', 'TEXTO_LIVRE', 'Engenharia de Software', 'FACIL', 2);
+(28, 'Descreva a importância do uso de transações ao gravar dados em múltiplas tabelas.', 'TEXTO_LIVRE', 'Engenharia de Software', 'MEDIA', 2),
+(29, 'Explique a diferença entre ON DELETE CASCADE e ON DELETE RESTRICT em chaves estrangeiras.', 'TEXTO_LIVRE', 'Banco de Dados I', 'MEDIA', 1),
+(30, 'Quais vantagens um índice parcial traz em consultas frequentes no PostgreSQL?', 'TEXTO_LIVRE', 'Banco de Dados I', 'DIFICIL', 1),
+(31, 'Compare uma subconsulta correlacionada com uma junção tradicional em termos de legibilidade.', 'TEXTO_LIVRE', 'Banco de Dados I', 'DIFICIL', 2),
+(32, 'Qual a diferença entre testes unitários e testes de integração em uma API REST?', 'TEXTO_LIVRE', 'Engenharia de Software', 'FACIL', 2);
 
--- Alternativas (4 por questao de multipla escolha: ids 1..96)
+-- Alternativas (4 por questão de múltipla escolha: ids 1..96)
 INSERT INTO alternativa (id, questao_id, letra, texto, correta) VALUES
 (1, 1, 'A', 'MAKE TABLE', FALSE),
 (2, 1, 'B', 'CREATE TABLE', TRUE),
@@ -74,7 +75,7 @@ INSERT INTO alternativa (id, questao_id, letra, texto, correta) VALUES
 (5, 2, 'A', '1FN', FALSE),
 (6, 2, 'B', '2FN', FALSE),
 (7, 2, 'C', '3FN', TRUE),
-(8, 2, 'D', 'Forma Nao Normalizada', FALSE),
+(8, 2, 'D', 'Forma Não Normalizada', FALSE),
 (9, 3, 'A', 'CHECK', FALSE),
 (10, 3, 'B', 'UNIQUE', TRUE),
 (11, 3, 'C', 'NOT NULL', FALSE),
@@ -89,7 +90,7 @@ INSERT INTO alternativa (id, questao_id, letra, texto, correta) VALUES
 (20, 5, 'D', 'NATURAL JOIN', FALSE),
 (21, 6, 'A', 'Exclui os filhos automaticamente', FALSE),
 (22, 6, 'B', 'Define NULL nos filhos', FALSE),
-(23, 6, 'C', 'Bloqueia a exclusao com erro de integridade', TRUE),
+(23, 6, 'C', 'Bloqueia a exclusão com erro de integridade', TRUE),
 (24, 6, 'D', 'Ignora a chave estrangeira', FALSE),
 (25, 7, 'A', 'IN', TRUE),
 (26, 7, 'B', 'LIKE', FALSE),
@@ -99,18 +100,18 @@ INSERT INTO alternativa (id, questao_id, letra, texto, correta) VALUES
 (30, 8, 'B', 'DENSE_RANK()', FALSE),
 (31, 8, 'C', 'RANK()', TRUE),
 (32, 8, 'D', 'COUNT()', FALSE),
-(33, 9, 'A', 'Nao ter dependencias parciais da chave composta', TRUE),
-(34, 9, 'B', 'Nao ter chaves estrangeiras', FALSE),
+(33, 9, 'A', 'Não ter dependências parciais da chave composta', TRUE),
+(34, 9, 'B', 'Não ter chaves estrangeiras', FALSE),
 (35, 9, 'C', 'Ter apenas uma coluna', FALSE),
-(36, 9, 'D', 'Usar indices B-Tree', FALSE),
+(36, 9, 'D', 'Usar índices B-Tree', FALSE),
 (37, 10, 'A', 'Atributo descritivo', FALSE),
-(38, 10, 'B', 'Chave primaria', TRUE),
+(38, 10, 'B', 'Chave primária', TRUE),
 (39, 10, 'C', 'Chave estrangeira opcional', FALSE),
-(40, 10, 'D', 'Valor padrao', FALSE),
+(40, 10, 'D', 'Valor padrão', FALSE),
 (41, 11, 'A', 'Cria-se uma nova tabela associativa com FKs das duas entidades', TRUE),
 (42, 11, 'B', 'Duplica-se a tabela maior', FALSE),
-(43, 11, 'C', 'Armazena-se uma lista separada por virgula', FALSE),
-(44, 11, 'D', 'Remove-se uma das chaves primarias', FALSE),
+(43, 11, 'C', 'Armazena-se uma lista separada por vírgula', FALSE),
+(44, 11, 'D', 'Remove-se uma das chaves primárias', FALSE),
 (45, 12, 'A', 'FETCH FIRST N ROWS ONLY', TRUE),
 (46, 12, 'B', 'GROUP TOP N', FALSE),
 (47, 12, 'C', 'FILTER N ROWS', FALSE),
@@ -118,7 +119,7 @@ INSERT INTO alternativa (id, questao_id, letra, texto, correta) VALUES
 (49, 13, 'A', 'Durabilidade', FALSE),
 (50, 13, 'B', 'Atomicidade', TRUE),
 (51, 13, 'C', 'Isolamento', FALSE),
-(52, 13, 'D', 'Redundancia', FALSE),
+(52, 13, 'D', 'Redundância', FALSE),
 (53, 14, 'A', 'UPDATE TABLE', FALSE),
 (54, 14, 'B', 'ALTER TABLE', TRUE),
 (55, 14, 'C', 'MODIFY TABLE', FALSE),
@@ -131,10 +132,10 @@ INSERT INTO alternativa (id, questao_id, letra, texto, correta) VALUES
 (62, 16, 'B', 'SAVEPOINT', FALSE),
 (63, 16, 'C', 'COMMIT', TRUE),
 (64, 16, 'D', 'TRUNCATE', FALSE),
-(65, 17, 'A', 'Codificacao', FALSE),
-(66, 17, 'B', 'Validacao', TRUE),
-(67, 17, 'C', 'Refatoracao', FALSE),
-(68, 17, 'D', 'Compilacao', FALSE),
+(65, 17, 'A', 'Codificação', FALSE),
+(66, 17, 'B', 'Validação', TRUE),
+(67, 17, 'C', 'Refatoração', FALSE),
+(68, 17, 'D', 'Compilação', FALSE),
 (69, 18, 'A', 'Controller', FALSE),
 (70, 18, 'B', 'View / HTML', FALSE),
 (71, 18, 'C', 'DAO', TRUE),
@@ -149,14 +150,14 @@ INSERT INTO alternativa (id, questao_id, letra, texto, correta) VALUES
 (80, 20, 'D', 'Factory Method', FALSE),
 (81, 21, 'A', 'Pilha', FALSE),
 (82, 21, 'B', 'Fila', TRUE),
-(83, 21, 'C', 'Arvore B', FALSE),
+(83, 21, 'C', 'Árvore B', FALSE),
 (84, 21, 'D', 'Tabela Hash', FALSE),
 (85, 22, 'A', 'O(n)', FALSE),
 (86, 22, 'B', 'O(n log n)', FALSE),
 (87, 22, 'C', 'O(log n)', TRUE),
 (88, 22, 'D', 'O(1)', FALSE),
 (89, 23, 'A', 'Lista encadeada', FALSE),
-(90, 23, 'B', 'Arvore binaria de busca', TRUE),
+(90, 23, 'B', 'Árvore binária de busca', TRUE),
 (91, 23, 'C', 'Matriz esparsa', FALSE),
 (92, 23, 'D', 'Grafo bipartido', FALSE),
 (93, 24, 'A', 'catch', FALSE),
@@ -164,16 +165,16 @@ INSERT INTO alternativa (id, questao_id, letra, texto, correta) VALUES
 (95, 24, 'C', 'throw', FALSE),
 (96, 24, 'D', 'continue', FALSE);
 
--- 6 avaliacoes
+-- 6 avaliações
 INSERT INTO avaliacao (id, titulo, descricao, tipo, data_aplicacao, hora_inicio, hora_fim, criado_por) VALUES
-(1, 'Prova 1 de Banco de Dados', 'DDL, restricoes de integridade, SQL basico e agrupamentos.', 'PROVA', '2026-10-16', '19:15', '21:00', 1),
-(2, 'Simulado SQL e Joins', 'Consultas com INNER JOIN, LEFT JOIN, subconsultas e funcoes de janela.', 'SIMULADO', '2026-10-28', '19:15', '20:45', 1),
-(3, 'Quiz Normalizacao 3FN', 'Formas normais, dependencias funcionais e mapeamento ER.', 'QUIZ', '2026-11-04', '20:00', '20:40', 2),
-(4, 'Prova 1 de Engenharia de Software', 'Arquitetura em camadas, JDBC, principios SOLID e transacoes.', 'PROVA', '2026-11-11', '19:15', '21:00', 2),
-(5, 'Simulado Geral de Computacao', 'Transacoes ACID, DDL, algoritmos e estruturas de dados.', 'SIMULADO', '2026-11-16', '19:00', '20:30', 3),
-(6, 'Quiz Transacoes e Integridade', 'CHECK, COMMIT, tratamento de excecoes e chaves estrangeiras.', 'QUIZ', '2026-11-20', '20:00', '20:45', 1);
+(1, 'Prova 1 de Banco de Dados', 'DDL, restrições de integridade, SQL básico e agrupamentos.', 'PROVA', '2026-10-16', '19:15', '21:00', 1),
+(2, 'Simulado SQL e Joins', 'Consultas com INNER JOIN, LEFT JOIN, subconsultas e funções de janela.', 'SIMULADO', '2026-10-28', '19:15', '20:45', 1),
+(3, 'Quiz Normalização 3FN', 'Formas normais, dependências funcionais e mapeamento ER.', 'QUIZ', '2026-11-04', '20:00', '20:40', 2),
+(4, 'Prova 1 de Engenharia de Software', 'Arquitetura em camadas, JDBC, princípios SOLID e transações.', 'PROVA', '2026-11-11', '19:15', '21:00', 2),
+(5, 'Simulado Geral de Computação', 'Transações ACID, DDL, algoritmos e estruturas de dados.', 'SIMULADO', '2026-11-16', '19:00', '20:30', 3),
+(6, 'Quiz Transações e Integridade', 'CHECK, COMMIT, tratamento de exceções e chaves estrangeiras.', 'QUIZ', '2026-11-20', '20:00', '20:45', 1);
 
--- Questoes das avaliacoes (reutilizando questoes 1 e 2; questoes 30, 31 e 32 ficam sem uso)
+-- Questões das avaliações (reutilizando questões 1 e 2; questões 30, 31 e 32 ficam sem uso)
 INSERT INTO avaliacao_questao (avaliacao_id, questao_id, ordem, valor) VALUES
 (1, 1, 1, 1.50),
 (1, 2, 2, 1.50),
@@ -212,7 +213,7 @@ INSERT INTO avaliacao_questao (avaliacao_id, questao_id, ordem, valor) VALUES
 (6, 24, 3, 2.00),
 (6, 29, 4, 4.00);
 
--- Atribuicoes de alunos as avaliacoes (inclui PENDENTE e RESPONDIDA)
+-- Atribuições de alunos às avaliações (inclui PENDENTE e RESPONDIDA)
 INSERT INTO avaliacao_usuario (avaliacao_id, usuario_id, status, enviada_em) VALUES
 (1, 4, 'CORRIGIDA', '2026-10-16 20:32:00'),
 (1, 5, 'CORRIGIDA', '2026-10-16 20:41:00'),
@@ -270,7 +271,7 @@ INSERT INTO avaliacao_usuario (avaliacao_id, usuario_id, status, enviada_em) VAL
 (6, 10, 'PENDENTE', NULL),
 (6, 11, 'RESPONDIDA', '2026-11-20 20:41:00');
 
--- Respostas da Avaliacao 1 (corretas: Q1=2, Q2=7, Q3=10, Q4=15)
+-- Respostas da Avaliação 1 (corretas: Q1=2, Q2=7, Q3=10, Q4=15)
 INSERT INTO resposta (avaliacao_id, usuario_id, questao_id, alternativa_id, texto_resposta, nota_obtida, corrigida_por, corrigida_em) VALUES
 (1, 4, 1, 2, NULL, 1.50, NULL, '2026-10-16 20:32:00'),
 (1, 4, 2, 7, NULL, 1.50, NULL, '2026-10-16 20:32:00'),
@@ -282,13 +283,13 @@ INSERT INTO resposta (avaliacao_id, usuario_id, questao_id, alternativa_id, text
 (1, 5, 2, 6, NULL, 0.00, NULL, '2026-10-16 20:41:00'),
 (1, 5, 3, 10, NULL, 1.50, NULL, '2026-10-16 20:41:00'),
 (1, 5, 4, 13, NULL, 0.00, NULL, '2026-10-16 20:41:00'),
-(1, 5, 25, NULL, 'WHERE e usado antes de agrupar; HAVING aplica condicoes sobre funcoes de agregacao nos grupos.', 2.50, 1, '2026-10-17 10:05:00'),
+(1, 5, 25, NULL, 'WHERE é usado antes de agrupar; HAVING aplica condições sobre funções de agregação nos grupos.', 2.50, 1, '2026-10-17 10:05:00'),
 
 (1, 6, 1, 2, NULL, 1.50, NULL, '2026-10-16 20:19:00'),
 (1, 6, 2, 7, NULL, 1.50, NULL, '2026-10-16 20:19:00'),
 (1, 6, 3, 11, NULL, 0.00, NULL, '2026-10-16 20:19:00'),
 (1, 6, 4, 15, NULL, 2.00, NULL, '2026-10-16 20:19:00'),
-(1, 6, 25, NULL, 'WHERE filtra tuplas antes do GROUP BY; HAVING filtra o resultado ja agrupado.', 3.50, 1, '2026-10-17 10:12:00'),
+(1, 6, 25, NULL, 'WHERE filtra tuplas antes do GROUP BY; HAVING filtra o resultado já agrupado.', 3.50, 1, '2026-10-17 10:12:00'),
 
 (1, 7, 1, 2, NULL, 1.50, NULL, '2026-10-16 20:50:00'),
 (1, 7, 2, 5, NULL, 0.00, NULL, '2026-10-16 20:50:00'),
@@ -300,19 +301,19 @@ INSERT INTO resposta (avaliacao_id, usuario_id, questao_id, alternativa_id, text
 (1, 8, 2, 6, NULL, 0.00, NULL, '2026-10-16 20:44:00'),
 (1, 8, 3, 10, NULL, 1.50, NULL, '2026-10-16 20:44:00'),
 (1, 8, 4, 14, NULL, 0.00, NULL, '2026-10-16 20:44:00'),
-(1, 8, 25, NULL, 'WHERE e para tabelas pequenas e HAVING para tabelas grandes.', 1.00, 1, '2026-10-17 10:25:00'),
+(1, 8, 25, NULL, 'WHERE é para tabelas pequenas e HAVING para tabelas grandes.', 1.00, 1, '2026-10-17 10:25:00'),
 
 (1, 9, 1, 2, NULL, 1.50, NULL, '2026-10-16 20:55:00'),
 (1, 9, 2, 7, NULL, 1.50, NULL, '2026-10-16 20:55:00'),
 (1, 9, 3, 10, NULL, 1.50, NULL, '2026-10-16 20:55:00'),
 (1, 9, 4, 13, NULL, 0.00, NULL, '2026-10-16 20:55:00'),
-(1, 9, 25, NULL, 'WHERE seleciona linhas antes da agregacao e HAVING filtra grupos formados pelo GROUP BY.', NULL, NULL, NULL),
+(1, 9, 25, NULL, 'WHERE seleciona linhas antes da agregação e HAVING filtra grupos formados pelo GROUP BY.', NULL, NULL, NULL),
 
 (1, 11, 1, 2, NULL, 1.50, NULL, '2026-10-16 20:28:00'),
 (1, 11, 2, 7, NULL, 1.50, NULL, '2026-10-16 20:28:00'),
 (1, 11, 3, 10, NULL, 1.50, NULL, '2026-10-16 20:28:00'),
 (1, 11, 4, 15, NULL, 2.00, NULL, '2026-10-16 20:28:00'),
-(1, 11, 25, NULL, 'WHERE atua antes do agrupamento e HAVING atua apos o GROUP BY sobre agregacoes.', 3.50, 1, '2026-10-17 10:30:00'),
+(1, 11, 25, NULL, 'WHERE atua antes do agrupamento e HAVING atua após o GROUP BY sobre agregações.', 3.50, 1, '2026-10-17 10:30:00'),
 
 (1, 12, 1, 2, NULL, 1.50, NULL, '2026-10-16 20:35:00'),
 (1, 12, 2, 6, NULL, 0.00, NULL, '2026-10-16 20:35:00'),
@@ -320,28 +321,28 @@ INSERT INTO resposta (avaliacao_id, usuario_id, questao_id, alternativa_id, text
 (1, 12, 4, 15, NULL, 2.00, NULL, '2026-10-16 20:35:00'),
 (1, 12, 25, NULL, 'WHERE filtra registros individuais e HAVING filtra grupos.', 3.00, 1, '2026-10-17 10:35:00');
 
--- Respostas da Avaliacao 2 (corretas: Q1=2, Q5=18, Q6=23, Q7=25, Q8=31)
+-- Respostas da Avaliação 2 (corretas: Q1=2, Q5=18, Q6=23, Q7=25, Q8=31)
 INSERT INTO resposta (avaliacao_id, usuario_id, questao_id, alternativa_id, texto_resposta, nota_obtida, corrigida_por, corrigida_em) VALUES
 (2, 4, 1, 2, NULL, 1.50, NULL, '2026-10-28 20:12:00'),
 (2, 4, 5, 18, NULL, 1.50, NULL, '2026-10-28 20:12:00'),
 (2, 4, 6, 23, NULL, 1.50, NULL, '2026-10-28 20:12:00'),
 (2, 4, 7, 25, NULL, 1.50, NULL, '2026-10-28 20:12:00'),
 (2, 4, 8, 30, NULL, 0.00, NULL, '2026-10-28 20:12:00'),
-(2, 4, 26, NULL, 'Usamos LEFT JOIN quando queremos manter todos os registros da tabela principal, como listar alunos mesmo que ainda nao tenham respondido.', 2.50, 1, '2026-10-29 09:00:00'),
+(2, 4, 26, NULL, 'Usamos LEFT JOIN quando queremos manter todos os registros da tabela principal, como listar alunos mesmo que ainda não tenham respondido.', 2.50, 1, '2026-10-29 09:00:00'),
 
 (2, 5, 1, 2, NULL, 1.50, NULL, '2026-10-28 20:22:00'),
 (2, 5, 5, 18, NULL, 1.50, NULL, '2026-10-28 20:22:00'),
 (2, 5, 6, 21, NULL, 0.00, NULL, '2026-10-28 20:22:00'),
 (2, 5, 7, 25, NULL, 1.50, NULL, '2026-10-28 20:22:00'),
 (2, 5, 8, 29, NULL, 0.00, NULL, '2026-10-28 20:22:00'),
-(2, 5, 26, NULL, 'LEFT JOIN mostra tambem quem nao tem correspondencia na tabela da direita, util para achar questoes nunca usadas.', 2.00, 1, '2026-10-29 09:10:00'),
+(2, 5, 26, NULL, 'LEFT JOIN mostra também quem não tem correspondência na tabela da direita, útil para achar questões nunca usadas.', 2.00, 1, '2026-10-29 09:10:00'),
 
 (2, 6, 1, 2, NULL, 1.50, NULL, '2026-10-28 20:05:00'),
 (2, 6, 5, 17, NULL, 0.00, NULL, '2026-10-28 20:05:00'),
 (2, 6, 6, 23, NULL, 1.50, NULL, '2026-10-28 20:05:00'),
 (2, 6, 7, 25, NULL, 1.50, NULL, '2026-10-28 20:05:00'),
 (2, 6, 8, 31, NULL, 1.50, NULL, '2026-10-28 20:05:00'),
-(2, 6, 26, NULL, 'Para nao descartar linhas sem correspondencia da tabela a esquerda. Exemplo: relatorio de alunos pendentes.', 2.50, 1, '2026-10-29 09:15:00'),
+(2, 6, 26, NULL, 'Para não descartar linhas sem correspondência da tabela à esquerda. Exemplo: relatório de alunos pendentes.', 2.50, 1, '2026-10-29 09:15:00'),
 
 (2, 7, 1, 2, NULL, 1.50, NULL, '2026-10-28 20:39:00'),
 (2, 7, 5, 18, NULL, 1.50, NULL, '2026-10-28 20:39:00'),
@@ -355,23 +356,23 @@ INSERT INTO resposta (avaliacao_id, usuario_id, questao_id, alternativa_id, text
 (2, 8, 6, 22, NULL, 0.00, NULL, '2026-10-28 20:31:00'),
 (2, 8, 7, 25, NULL, 1.50, NULL, '2026-10-28 20:31:00'),
 (2, 8, 8, 30, NULL, 0.00, NULL, '2026-10-28 20:31:00'),
-(2, 8, 26, NULL, 'LEFT JOIN e mais lento, mas traz linhas nulas.', 1.00, 1, '2026-10-29 09:20:00'),
+(2, 8, 26, NULL, 'LEFT JOIN é mais lento, mas traz linhas nulas.', 1.00, 1, '2026-10-29 09:20:00'),
 
 (2, 19, 1, 2, NULL, 1.50, NULL, '2026-10-28 20:17:00'),
 (2, 19, 5, 18, NULL, 1.50, NULL, '2026-10-28 20:17:00'),
 (2, 19, 6, 23, NULL, 1.50, NULL, '2026-10-28 20:17:00'),
 (2, 19, 7, 25, NULL, 1.50, NULL, '2026-10-28 20:17:00'),
 (2, 19, 8, 31, NULL, 1.50, NULL, '2026-10-28 20:17:00'),
-(2, 19, 26, NULL, 'Para listar registros da tabela esquerda sem vinculo a direita, como turmas sem alunos cadastrados.', 2.50, 1, '2026-10-29 09:25:00'),
+(2, 19, 26, NULL, 'Para listar registros da tabela esquerda sem vínculo à direita, como turmas sem alunos cadastrados.', 2.50, 1, '2026-10-29 09:25:00'),
 
 (2, 20, 1, 3, NULL, 0.00, NULL, '2026-10-28 20:29:00'),
 (2, 20, 5, 18, NULL, 1.50, NULL, '2026-10-28 20:29:00'),
 (2, 20, 6, 23, NULL, 1.50, NULL, '2026-10-28 20:29:00'),
 (2, 20, 7, 25, NULL, 1.50, NULL, '2026-10-28 20:29:00'),
 (2, 20, 8, 29, NULL, 0.00, NULL, '2026-10-28 20:29:00'),
-(2, 20, 26, NULL, 'Permite encontrar registros orfaos ou pendentes filtrando por IS NULL na tabela da direita.', 2.00, 1, '2026-10-29 09:30:00');
+(2, 20, 26, NULL, 'Permite encontrar registros órfãos ou pendentes filtrando por IS NULL na tabela da direita.', 2.00, 1, '2026-10-29 09:30:00');
 
--- Respostas da Avaliacao 3 (corretas: Q2=7, Q9=33, Q10=38, Q11=41, Q12=45)
+-- Respostas da Avaliação 3 (corretas: Q2=7, Q9=33, Q10=38, Q11=41, Q12=45)
 INSERT INTO resposta (avaliacao_id, usuario_id, questao_id, alternativa_id, texto_resposta, nota_obtida, corrigida_por, corrigida_em) VALUES
 (3, 4, 2, 7, NULL, 2.00, NULL, '2026-11-04 20:25:00'),
 (3, 4, 9, 33, NULL, 2.00, NULL, '2026-11-04 20:25:00'),
@@ -415,101 +416,101 @@ INSERT INTO resposta (avaliacao_id, usuario_id, questao_id, alternativa_id, text
 (3, 16, 11, 41, NULL, 2.00, NULL, '2026-11-04 20:30:00'),
 (3, 16, 12, 45, NULL, 2.00, NULL, '2026-11-04 20:30:00');
 
--- Respostas da Avaliacao 4 (corretas: Q17=66, Q18=71, Q19=74, Q20=77)
+-- Respostas da Avaliação 4 (corretas: Q17=66, Q18=71, Q19=74, Q20=77)
 INSERT INTO resposta (avaliacao_id, usuario_id, questao_id, alternativa_id, texto_resposta, nota_obtida, corrigida_por, corrigida_em) VALUES
 (4, 12, 17, 66, NULL, 1.50, NULL, '2026-11-11 20:14:00'),
 (4, 12, 18, 71, NULL, 1.50, NULL, '2026-11-11 20:14:00'),
 (4, 12, 19, 74, NULL, 2.00, NULL, '2026-11-11 20:14:00'),
 (4, 12, 20, 77, NULL, 2.00, NULL, '2026-11-11 20:14:00'),
-(4, 12, 28, NULL, 'Garante atomicidade: se falhar o insert de uma alternativa ou item, toda a operacao sofre rollback evitando dados pela metade.', 3.00, 2, '2026-11-12 11:00:00'),
+(4, 12, 28, NULL, 'Garante atomicidade: se falhar o insert de uma alternativa ou item, toda a operação sofre rollback evitando dados pela metade.', 3.00, 2, '2026-11-12 11:00:00'),
 
 (4, 13, 17, 66, NULL, 1.50, NULL, '2026-11-11 20:42:00'),
 (4, 13, 18, 71, NULL, 1.50, NULL, '2026-11-11 20:42:00'),
 (4, 13, 19, 73, NULL, 0.00, NULL, '2026-11-11 20:42:00'),
 (4, 13, 20, 78, NULL, 0.00, NULL, '2026-11-11 20:42:00'),
-(4, 13, 28, NULL, 'Transacoes evitam inconsistencia quando uma gravacao envolve mais de uma tabela.', 2.50, 2, '2026-11-12 11:05:00'),
+(4, 13, 28, NULL, 'Transações evitam inconsistência quando uma gravação envolve mais de uma tabela.', 2.50, 2, '2026-11-12 11:05:00'),
 
 (4, 14, 17, 65, NULL, 0.00, NULL, '2026-11-11 20:37:00'),
 (4, 14, 18, 71, NULL, 1.50, NULL, '2026-11-11 20:37:00'),
 (4, 14, 19, 74, NULL, 2.00, NULL, '2026-11-11 20:37:00'),
 (4, 14, 20, 77, NULL, 2.00, NULL, '2026-11-11 20:37:00'),
-(4, 14, 28, NULL, 'Se ocorrer erro na segunda tabela, a primeira operacao e desfeita mantendo a integridade do banco.', 2.50, 2, '2026-11-12 11:10:00'),
+(4, 14, 28, NULL, 'Se ocorrer erro na segunda tabela, a primeira operação é desfeita mantendo a integridade do banco.', 2.50, 2, '2026-11-12 11:10:00'),
 
 (4, 15, 17, 66, NULL, 1.50, NULL, '2026-11-11 20:51:00'),
 (4, 15, 18, 69, NULL, 0.00, NULL, '2026-11-11 20:51:00'),
 (4, 15, 19, 74, NULL, 2.00, NULL, '2026-11-11 20:51:00'),
 (4, 15, 20, 79, NULL, 0.00, NULL, '2026-11-11 20:51:00'),
-(4, 15, 28, NULL, 'Transacoes permitem confirmar tudo com commit ou desfazer tudo com rollback em caso de falha.', NULL, NULL, NULL),
+(4, 15, 28, NULL, 'Transações permitem confirmar tudo com commit ou desfazer tudo com rollback em caso de falha.', NULL, NULL, NULL),
 
 (4, 16, 17, 66, NULL, 1.50, NULL, '2026-11-11 20:28:00'),
 (4, 16, 18, 71, NULL, 1.50, NULL, '2026-11-11 20:28:00'),
 (4, 16, 19, 74, NULL, 2.00, NULL, '2026-11-11 20:28:00'),
 (4, 16, 20, 78, NULL, 0.00, NULL, '2026-11-11 20:28:00'),
-(4, 16, 28, NULL, 'Evita que o sistema salve um cabecalho sem seus itens relacionados.', 3.00, 2, '2026-11-12 11:15:00'),
+(4, 16, 28, NULL, 'Evita que o sistema salve um cabeçalho sem seus itens relacionados.', 3.00, 2, '2026-11-12 11:15:00'),
 
 (4, 18, 17, 66, NULL, 1.50, NULL, '2026-11-11 20:48:00'),
 (4, 18, 18, 71, NULL, 1.50, NULL, '2026-11-11 20:48:00'),
 (4, 18, 19, 73, NULL, 0.00, NULL, '2026-11-11 20:48:00'),
 (4, 18, 20, 77, NULL, 2.00, NULL, '2026-11-11 20:48:00'),
-(4, 18, 28, NULL, 'Mantem os dados consistentes entre multiplas tabelas.', 2.00, 2, '2026-11-12 11:20:00');
+(4, 18, 28, NULL, 'Mantém os dados consistentes entre múltiplas tabelas.', 2.00, 2, '2026-11-12 11:20:00');
 
--- Respostas da Avaliacao 5 (corretas: Q13=50, Q14=54, Q21=82, Q22=87, Q23=90)
+-- Respostas da Avaliação 5 (corretas: Q13=50, Q14=54, Q21=82, Q22=87, Q23=90)
 INSERT INTO resposta (avaliacao_id, usuario_id, questao_id, alternativa_id, texto_resposta, nota_obtida, corrigida_por, corrigida_em) VALUES
 (5, 4, 13, 50, NULL, 1.50, NULL, '2026-11-16 20:10:00'),
 (5, 4, 14, 54, NULL, 1.50, NULL, '2026-11-16 20:10:00'),
 (5, 4, 21, 82, NULL, 1.50, NULL, '2026-11-16 20:10:00'),
 (5, 4, 22, 87, NULL, 1.50, NULL, '2026-11-16 20:10:00'),
 (5, 4, 23, 90, NULL, 1.50, NULL, '2026-11-16 20:10:00'),
-(5, 4, 27, NULL, 'Porque a nota total depende da soma das respostas em outra tabela; salva-la causaria redundancia e risco de inconsistencia.', 2.50, 3, '2026-11-17 09:00:00'),
+(5, 4, 27, NULL, 'Porque a nota total depende da soma das respostas em outra tabela; salvá-la causaria redundância e risco de inconsistência.', 2.50, 3, '2026-11-17 09:00:00'),
 
 (5, 5, 13, 50, NULL, 1.50, NULL, '2026-11-16 20:18:00'),
 (5, 5, 14, 54, NULL, 1.50, NULL, '2026-11-16 20:18:00'),
 (5, 5, 21, 82, NULL, 1.50, NULL, '2026-11-16 20:18:00'),
 (5, 5, 22, 86, NULL, 0.00, NULL, '2026-11-16 20:18:00'),
 (5, 5, 23, 90, NULL, 1.50, NULL, '2026-11-16 20:18:00'),
-(5, 5, 27, NULL, 'E um atributo derivado que pode ser calculado com SUM(nota_obtida).', 2.00, 3, '2026-11-17 09:05:00'),
+(5, 5, 27, NULL, 'É um atributo derivado que pode ser calculado com SUM(nota_obtida).', 2.00, 3, '2026-11-17 09:05:00'),
 
 (5, 19, 13, 50, NULL, 1.50, NULL, '2026-11-16 20:11:00'),
 (5, 19, 14, 54, NULL, 1.50, NULL, '2026-11-16 20:11:00'),
 (5, 19, 21, 82, NULL, 1.50, NULL, '2026-11-16 20:11:00'),
 (5, 19, 22, 87, NULL, 1.50, NULL, '2026-11-16 20:11:00'),
 (5, 19, 23, 91, NULL, 0.00, NULL, '2026-11-16 20:11:00'),
-(5, 19, 27, NULL, 'Campos calculados nao devem ficar armazenados para nao perder sincronizacao ao corrigir uma questao.', 2.50, 3, '2026-11-17 09:10:00'),
+(5, 19, 27, NULL, 'Campos calculados não devem ficar armazenados para não perder sincronização ao corrigir uma questão.', 2.50, 3, '2026-11-17 09:10:00'),
 
 (5, 20, 13, 49, NULL, 0.00, NULL, '2026-11-16 20:22:00'),
 (5, 20, 14, 54, NULL, 1.50, NULL, '2026-11-16 20:22:00'),
 (5, 20, 21, 81, NULL, 0.00, NULL, '2026-11-16 20:22:00'),
 (5, 20, 22, 87, NULL, 1.50, NULL, '2026-11-16 20:22:00'),
 (5, 20, 23, 90, NULL, 1.50, NULL, '2026-11-16 20:22:00'),
-(5, 20, 27, NULL, 'Violaria a normalizacao por guardar valor derivado.', 1.50, 3, '2026-11-17 09:15:00'),
+(5, 20, 27, NULL, 'Violaria a normalização por guardar valor derivado.', 1.50, 3, '2026-11-17 09:15:00'),
 
 (5, 21, 13, 50, NULL, 1.50, NULL, '2026-11-16 20:25:00'),
 (5, 21, 14, 54, NULL, 1.50, NULL, '2026-11-16 20:25:00'),
 (5, 21, 21, 82, NULL, 1.50, NULL, '2026-11-16 20:25:00'),
 (5, 21, 22, 85, NULL, 0.00, NULL, '2026-11-16 20:25:00'),
 (5, 21, 23, 90, NULL, 1.50, NULL, '2026-11-16 20:25:00'),
-(5, 21, 27, NULL, 'A nota total e derivada das notas de cada resposta, entao deve ser calculada em consulta SQL.', NULL, NULL, NULL),
+(5, 21, 27, NULL, 'A nota total é derivada das notas de cada resposta, então deve ser calculada em consulta SQL.', NULL, NULL, NULL),
 
 (5, 22, 13, 50, NULL, 1.50, NULL, '2026-11-16 20:09:00'),
 (5, 22, 14, 53, NULL, 0.00, NULL, '2026-11-16 20:09:00'),
 (5, 22, 21, 82, NULL, 1.50, NULL, '2026-11-16 20:09:00'),
 (5, 22, 22, 87, NULL, 1.50, NULL, '2026-11-16 20:09:00'),
 (5, 22, 23, 90, NULL, 1.50, NULL, '2026-11-16 20:09:00'),
-(5, 22, 27, NULL, 'Evita dependencia transitiva e dados duplicados.', 2.00, 3, '2026-11-17 09:20:00'),
+(5, 22, 27, NULL, 'Evita dependência transitiva e dados duplicados.', 2.00, 3, '2026-11-17 09:20:00'),
 
 (5, 24, 13, 50, NULL, 1.50, NULL, '2026-11-16 20:27:00'),
 (5, 24, 14, 54, NULL, 1.50, NULL, '2026-11-16 20:27:00'),
 (5, 24, 21, 82, NULL, 1.50, NULL, '2026-11-16 20:27:00'),
 (5, 24, 22, 87, NULL, 1.50, NULL, '2026-11-16 20:27:00'),
 (5, 24, 23, 90, NULL, 1.50, NULL, '2026-11-16 20:27:00'),
-(5, 24, 27, NULL, 'Porque basta somar as notas das questoes no SELECT sem precisar atualizar outra tabela.', 2.50, 3, '2026-11-17 09:25:00');
+(5, 24, 27, NULL, 'Porque basta somar as notas das questões no SELECT sem precisar atualizar outra tabela.', 2.50, 3, '2026-11-17 09:25:00');
 
--- Respostas da Avaliacao 6 (corretas: Q15=57, Q16=63, Q24=94)
+-- Respostas da Avaliação 6 (corretas: Q15=57, Q16=63, Q24=94)
 INSERT INTO resposta (avaliacao_id, usuario_id, questao_id, alternativa_id, texto_resposta, nota_obtida, corrigida_por, corrigida_em) VALUES
 (6, 5, 15, 57, NULL, 2.00, NULL, '2026-11-20 20:20:00'),
 (6, 5, 16, 63, NULL, 2.00, NULL, '2026-11-20 20:20:00'),
 (6, 5, 24, 94, NULL, 2.00, NULL, '2026-11-20 20:20:00'),
-(6, 5, 29, NULL, 'ON DELETE CASCADE exclui os filhos automaticamente; ON DELETE RESTRICT impede a exclusao enquanto houver filhos.', 3.50, 1, '2026-11-21 09:00:00'),
+(6, 5, 29, NULL, 'ON DELETE CASCADE exclui os filhos automaticamente; ON DELETE RESTRICT impede a exclusão enquanto houver filhos.', 3.50, 1, '2026-11-21 09:00:00'),
 
 (6, 6, 15, 57, NULL, 2.00, NULL, '2026-11-20 20:31:00'),
 (6, 6, 16, 61, NULL, 0.00, NULL, '2026-11-20 20:31:00'),
@@ -519,19 +520,19 @@ INSERT INTO resposta (avaliacao_id, usuario_id, questao_id, alternativa_id, text
 (6, 7, 15, 58, NULL, 0.00, NULL, '2026-11-20 20:38:00'),
 (6, 7, 16, 63, NULL, 2.00, NULL, '2026-11-20 20:38:00'),
 (6, 7, 24, 94, NULL, 2.00, NULL, '2026-11-20 20:38:00'),
-(6, 7, 29, NULL, 'CASCADE apaga registros dependentes junto com o pai, enquanto RESTRICT lanca erro se houver dependencia.', NULL, NULL, NULL),
+(6, 7, 29, NULL, 'CASCADE apaga registros dependentes junto com o pai, enquanto RESTRICT lança erro se houver dependência.', NULL, NULL, NULL),
 
 (6, 9, 15, 57, NULL, 2.00, NULL, '2026-11-20 20:25:00'),
 (6, 9, 16, 63, NULL, 2.00, NULL, '2026-11-20 20:25:00'),
 (6, 9, 24, 93, NULL, 0.00, NULL, '2026-11-20 20:25:00'),
-(6, 9, 29, NULL, 'RESTRICT protege contra exclusoes acidentais e CASCADE remove em cascata.', 3.00, 1, '2026-11-21 09:10:00'),
+(6, 9, 29, NULL, 'RESTRICT protege contra exclusões acidentais e CASCADE remove em cascata.', 3.00, 1, '2026-11-21 09:10:00'),
 
 (6, 11, 15, 57, NULL, 2.00, NULL, '2026-11-20 20:41:00'),
 (6, 11, 16, 63, NULL, 2.00, NULL, '2026-11-20 20:41:00'),
 (6, 11, 24, 94, NULL, 2.00, NULL, '2026-11-20 20:41:00'),
 (6, 11, 29, NULL, 'CASCADE remove os dependentes automaticamente e RESTRICT impede apagar o registro pai.', NULL, NULL, NULL);
 
--- Ajuste das sequences apos inserts com ID explicito
+-- Ajuste das sequences após inserts com ID explícito
 SELECT setval(pg_get_serial_sequence('turma', 'id'), COALESCE((SELECT MAX(id) FROM turma), 1));
 SELECT setval(pg_get_serial_sequence('usuario', 'id'), COALESCE((SELECT MAX(id) FROM usuario), 1));
 SELECT setval(pg_get_serial_sequence('questao', 'id'), COALESCE((SELECT MAX(id) FROM questao), 1));
