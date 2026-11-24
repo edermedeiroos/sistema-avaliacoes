@@ -62,8 +62,6 @@ Contas para teste (senha `Uel@Bd2026` para todas):
 
 ## Relatórios
 
-> Após rodar localmente, salve as capturas de tela em `docs/screenshots/` com os nomes abaixo.
-
 ### 1. Desempenho médio por avaliação
 - **Objetivo:** mostrar nota média, maior e menor nota das avaliações corrigidas, com filtros por período e tipo.
 - **Recursos SQL:** `INNER JOIN`, subconsulta (`SUM` por aluno), `COUNT`, `AVG`, `MAX`, `MIN`, `GROUP BY`, `HAVING`, `WHERE` com `BETWEEN` e `IN`.
