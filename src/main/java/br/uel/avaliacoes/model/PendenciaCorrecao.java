@@ -14,7 +14,9 @@ public class PendenciaCorrecao {
     private String enunciado;
     private String textoResposta;
     private BigDecimal valorMaximo;
+    private BigDecimal notaObtida;
     private LocalDateTime respondidaEm;
+    private LocalDateTime corrigidaEm;
 
     public Integer getRespostaId() { return respostaId; }
     public void setRespostaId(Integer respostaId) { this.respostaId = respostaId; }
@@ -46,6 +48,12 @@ public class PendenciaCorrecao {
     public BigDecimal getValorMaximo() { return valorMaximo; }
     public void setValorMaximo(BigDecimal valorMaximo) { this.valorMaximo = valorMaximo; }
 
+    public BigDecimal getNotaObtida() { return notaObtida; }
+    public void setNotaObtida(BigDecimal notaObtida) { this.notaObtida = notaObtida; }
+
     public LocalDateTime getRespondidaEm() { return respondidaEm; }
     public void setRespondidaEm(LocalDateTime respondidaEm) { this.respondidaEm = respondidaEm; }
+
+    public LocalDateTime getCorrigidaEm() { return corrigidaEm; }
+    public void setCorrigidaEm(LocalDateTime corrigidaEm) { this.corrigidaEm = corrigidaEm; }
 }

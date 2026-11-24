@@ -2,6 +2,7 @@ let questoesCache = [];
 let turmasCache = [];
 let avaliacaoAtribuicaoId = null;
 let editandoQuestaoId = null;
+let editandoAvaliacaoId = null;
 
 function toggleQuestaoForm(force) {
   const card = document.getElementById("novaQuestaoCard");
@@ -205,12 +206,36 @@ function renderAvaliacoesTabela(avaliacoes) {
       <td>${Number(a.valorTotal).toFixed(1)} pts</td>
       <td>${a.totalRespondidas} / ${a.totalAtribuidos}</td>
       <td>
-        <button class="btn btn-secondary btn-sm" onclick="abrirAtribuicao(${a.id}, '${esc(a.titulo).replace(/'/g, "\\'")}')">
-          Atribuir / Ver Alunos
-        </button>
+        <div class="btn-group">
+          <button class="btn btn-secondary btn-sm" onclick="editarAvaliacao(${a.id})">Editar</button>
+          <button class="btn btn-secondary btn-sm" onclick="abrirAtribuicao(${a.id}, '${esc(a.titulo).replace(/'/g, "\\'")}')">
+            Atribuir / Ver Alunos
+          </button>
+        </div>
       </td>
     </tr>
   `).join("");
+}
+
+function resetarFormAvaliacao() {
+  editandoAvaliacaoId = null;
+  document.getElementById("formNovaAvaliacao").reset();
+  document.getElementById("avData").value = new Date().toISOString().slice(0, 10);
+  document.getElementById("avInicio").value = "19:15";
+  document.getElementById("avFim").value = "21:00";
+  document.getElementById("avaliacaoFormTitle").textContent = "Montar Nova Avaliação";
+  document.getElementById("btnSalvarAvaliacao").textContent = "Criar Avaliação";
+  renderQuestionPicker();
+}
+
+function abrirNovaAvaliacao() {
+  const card = document.getElementById("novaAvaliacaoCard");
+  if (editandoAvaliacaoId !== null || card.classList.contains("hidden")) {
+    resetarFormAvaliacao();
+    toggleAvaliacaoForm(true);
+  } else {
+    toggleAvaliacaoForm(false);
+  }
 }
 
 function toggleAvaliacaoForm(force) {
@@ -222,7 +247,41 @@ function toggleAvaliacaoForm(force) {
     if (!document.getElementById("avData").value) {
       document.getElementById("avData").value = hoje;
     }
+    if (editandoAvaliacaoId === null) {
+      renderQuestionPicker();
+    }
+  } else {
+    resetarFormAvaliacao();
+  }
+}
+
+async function editarAvaliacao(id) {
+  try {
+    const av = await apiGet(`/api/avaliacoes/${id}`);
+    editandoAvaliacaoId = av.id;
+    document.getElementById("avaliacaoFormTitle").textContent = `Editar Avaliação #${av.id}`;
+    document.getElementById("btnSalvarAvaliacao").textContent = "Atualizar Avaliação";
+    document.getElementById("avTitulo").value = av.titulo || "";
+    document.getElementById("avDesc").value = av.descricao || "";
+    document.getElementById("avTipo").value = av.tipo || "PROVA";
+    document.getElementById("avData").value = av.dataAplicacao || "";
+    document.getElementById("avInicio").value = String(av.horaInicio || "19:15").slice(0, 5);
+    document.getElementById("avFim").value = String(av.horaFim || "21:00").slice(0, 5);
+    document.getElementById("avTurma").value = "";
+
     renderQuestionPicker();
+    (av.itens || []).forEach(item => {
+      const chk = document.querySelector(`.pick-q-chk[value="${item.questaoId}"]`);
+      const val = document.querySelector(`.pick-q-val[data-qid="${item.questaoId}"]`);
+      if (chk) chk.checked = true;
+      if (val) val.value = Number(item.valor).toFixed(1);
+    });
+    atualizarTotalAvaliacao();
+
+    document.getElementById("novaAvaliacaoCard").classList.remove("hidden");
+    document.getElementById("novaAvaliacaoCard").scrollIntoView({ behavior: "smooth", block: "start" });
+  } catch (err) {
+    showToast(err.message, true);
   }
 }
 
@@ -280,11 +339,15 @@ async function salvarAvaliacao(e) {
   };
 
   try {
-    await apiPost("/api/avaliacoes", payload);
-    e.target.reset();
+    const eraEdicao = editandoAvaliacaoId !== null;
+    if (eraEdicao) {
+      await apiPut(`/api/avaliacoes/${editandoAvaliacaoId}`, payload);
+    } else {
+      await apiPost("/api/avaliacoes", payload);
+    }
     toggleAvaliacaoForm(false);
     await carregarTelaAvaliacoes();
-    showToast("Avaliação criada com sucesso.");
+    showToast(eraEdicao ? "Avaliação atualizada com sucesso." : "Avaliação criada com sucesso.");
   } catch (err) {
     showToast(err.message, true);
   }
@@ -307,22 +370,38 @@ async function carregarAtribuidos(avaliacaoId) {
     const lista = await apiGet(`/api/avaliacoes/${avaliacaoId}/atribuidos`);
     const tbody = document.getElementById("atribuidosBody");
     if (lista.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="4" class="text-muted">Nenhum aluno atribuído ainda.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="5" class="text-muted">Nenhum aluno atribuído ainda.</td></tr>`;
       return;
     }
     tbody.innerHTML = lista.map(a => {
       const notaTxt = a.notaObtida !== null && a.notaObtida !== undefined
         ? `${Number(a.notaObtida).toFixed(1)} / ${Number(a.valorTotal).toFixed(1)}`
         : "-";
+      const acao = a.status === "PENDENTE"
+        ? `<button class="btn btn-danger btn-sm" onclick="removerAlunoAtribuido(${avaliacaoId}, ${a.usuarioId})">Remover</button>`
+        : `<span class="text-muted">Enviada</span>`;
       return `
         <tr>
           <td>${esc(a.usuarioNome)}</td>
           <td>${esc(a.turmaCodigo || "-")}</td>
           <td><span class="badge ${a.status === "CORRIGIDA" ? "badge-ok" : a.status === "RESPONDIDA" ? "badge-info" : "badge-warn"}">${esc(a.status)}</span></td>
           <td>${notaTxt}</td>
+          <td>${acao}</td>
         </tr>
       `;
     }).join("");
+  } catch (err) {
+    showToast(err.message, true);
+  }
+}
+
+async function removerAlunoAtribuido(avaliacaoId, usuarioId) {
+  if (!confirm("Remover este aluno da avaliação?")) return;
+  try {
+    await apiDelete(`/api/avaliacoes/${avaliacaoId}/atribuidos/${usuarioId}`);
+    await carregarAtribuidos(avaliacaoId);
+    await carregarTelaAvaliacoes();
+    showToast("Atribuição removida.");
   } catch (err) {
     showToast(err.message, true);
   }
@@ -356,29 +435,46 @@ async function confirmarAtribuicaoAluno() {
 
 async function carregarCorrecoesPendentes() {
   const container = document.getElementById("correcaoContainer");
+  const statusEl = document.getElementById("filtroCorrecaoStatus");
+  const status = statusEl ? statusEl.value : "PENDENTES";
+  const ehCorrigida = status === "CORRIGIDAS";
+
   try {
-    const lista = await apiGet("/api/correcoes/pendentes");
+    const lista = await apiGet(`/api/correcoes?status=${status}`);
     if (lista.length === 0) {
-      container.innerHTML = `<div class="card"><p class="text-muted" style="margin:0;">Nenhuma resposta discursiva aguardando correção.</p></div>`;
+      const msg = ehCorrigida
+        ? "Nenhuma resposta discursiva corrigida encontrada."
+        : "Nenhuma resposta discursiva aguardando correção.";
+      container.innerHTML = `<div class="card"><p class="text-muted" style="margin:0;">${msg}</p></div>`;
       return;
     }
-    container.innerHTML = lista.map(c => `
-      <div class="card">
-        <div class="panel-header" style="margin-bottom:8px;">
-          <div><strong>${esc(c.alunoNome)}</strong> <span class="text-muted">(${esc(c.turmaCodigo)} - ${esc(c.avaliacaoTitulo)})</span></div>
-          <span class="badge badge-warn">Máx. ${Number(c.valorMaximo).toFixed(1)} pts</span>
+    container.innerHTML = lista.map(c => {
+      const notaInicial = c.notaObtida !== null && c.notaObtida !== undefined
+        ? Number(c.notaObtida).toFixed(1)
+        : Number(c.valorMaximo).toFixed(1);
+      const badge = ehCorrigida
+        ? `<span class="badge badge-ok">Nota atual: ${notaInicial} / ${Number(c.valorMaximo).toFixed(1)} pts</span>`
+        : `<span class="badge badge-warn">Máx. ${Number(c.valorMaximo).toFixed(1)} pts</span>`;
+      const btnTexto = ehCorrigida ? "Atualizar Nota" : "Salvar Nota";
+
+      return `
+        <div class="card">
+          <div class="panel-header" style="margin-bottom:8px;">
+            <div><strong>${esc(c.alunoNome)}</strong> <span class="text-muted">(${esc(c.turmaCodigo)} - ${esc(c.avaliacaoTitulo)})</span></div>
+            ${badge}
+          </div>
+          <p style="margin:0 0 8px;"><strong>Questão:</strong> ${esc(c.enunciado)}</p>
+          <div class="answer-box">
+            <strong>Resposta do aluno:</strong><br/>${esc(c.textoResposta)}
+          </div>
+          <div class="form-actions">
+            <label style="margin:0;" for="nota_${c.respostaId}">Nota:</label>
+            <input type="number" id="nota_${c.respostaId}" min="0" max="${c.valorMaximo}" step="0.5" value="${notaInicial}" style="width:100px;" />
+            <button class="btn btn-primary btn-sm" onclick="salvarCorrecao(${c.respostaId})">${btnTexto}</button>
+          </div>
         </div>
-        <p style="margin:0 0 8px;"><strong>Questão:</strong> ${esc(c.enunciado)}</p>
-        <div class="answer-box">
-          <strong>Resposta do aluno:</strong><br/>${esc(c.textoResposta)}
-        </div>
-        <div class="form-actions">
-          <label style="margin:0;" for="nota_${c.respostaId}">Nota:</label>
-          <input type="number" id="nota_${c.respostaId}" min="0" max="${c.valorMaximo}" step="0.5" value="${Number(c.valorMaximo).toFixed(1)}" style="width:100px;" />
-          <button class="btn btn-primary btn-sm" onclick="salvarCorrecao(${c.respostaId})">Salvar Nota</button>
-        </div>
-      </div>
-    `).join("");
+      `;
+    }).join("");
   } catch (err) {
     showToast(err.message, true);
   }

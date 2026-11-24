@@ -169,11 +169,11 @@
           <h1>Avaliações</h1>
           <p>Monte avaliações com questões do banco, defina o valor por questão e atribua aos alunos.</p>
         </div>
-        <button class="btn btn-primary" onclick="toggleAvaliacaoForm()">+ Nova Avaliação</button>
+        <button class="btn btn-primary" onclick="abrirNovaAvaliacao()">+ Nova Avaliação</button>
       </div>
 
       <div id="novaAvaliacaoCard" class="card hidden">
-        <h2>Montar Nova Avaliação</h2>
+        <h2 id="avaliacaoFormTitle">Montar Nova Avaliação</h2>
         <form id="formNovaAvaliacao" onsubmit="salvarAvaliacao(event)">
           <div class="form-row">
             <div style="grid-column: span 2;">
@@ -218,7 +218,7 @@
           </div>
 
           <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Criar Avaliação</button>
+            <button type="submit" id="btnSalvarAvaliacao" class="btn btn-primary">Criar Avaliação</button>
             <button type="button" class="btn btn-secondary" onclick="toggleAvaliacaoForm(false)">Cancelar</button>
             <span id="avTotalPreview" class="text-muted preview-total"></span>
           </div>
@@ -245,7 +245,7 @@
         <h3 style="font-size:14px; margin-top:14px;">Alunos atribuídos</h3>
         <table>
           <thead>
-            <tr><th>Aluno</th><th>Turma</th><th>Status</th><th>Nota</th></tr>
+            <tr><th>Aluno</th><th>Turma</th><th>Status</th><th>Nota</th><th>Ação</th></tr>
           </thead>
           <tbody id="atribuidosBody"></tbody>
         </table>
@@ -324,7 +324,14 @@
       <div class="page-header">
         <div>
           <h1>Correção de Questões Discursivas</h1>
-          <p>Questões objetivas são corrigidas automaticamente. Atribua a nota das respostas em texto livre.</p>
+          <p>Questões objetivas são corrigidas automaticamente. Atribua ou ajuste a nota das respostas em texto livre.</p>
+        </div>
+        <div>
+          <label for="filtroCorrecaoStatus">Exibir</label>
+          <select id="filtroCorrecaoStatus" onchange="carregarCorrecoesPendentes()">
+            <option value="PENDENTES">Aguardando correção</option>
+            <option value="CORRIGIDAS">Já corrigidas (editar nota)</option>
+          </select>
         </div>
       </div>
       <div id="correcaoContainer"></div>

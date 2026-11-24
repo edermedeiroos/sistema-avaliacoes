@@ -123,20 +123,27 @@ public class RespostaDAO {
     }
 
     public List<PendenciaCorrecao> listarDiscursivasPendentes() {
+        return listarDiscursivas("PENDENTES");
+    }
+
+    public List<PendenciaCorrecao> listarDiscursivas(String status) {
+        boolean corrigidas = "CORRIGIDAS".equalsIgnoreCase(status);
+        String filtro = corrigidas ? "r.nota_obtida IS NOT NULL" : "r.nota_obtida IS NULL";
+        String ordenacao = corrigidas ? "r.corrigida_em DESC, r.id DESC" : "r.respondida_em ASC, r.id ASC";
         String sql = """
                 SELECT r.id AS resposta_id, r.avaliacao_id, a.titulo AS avaliacao_titulo,
                        r.usuario_id, u.nome AS aluno_nome, COALESCE(t.codigo, '-') AS turma_codigo,
                        r.questao_id, q.enunciado, r.texto_resposta, aq.valor AS valor_maximo,
-                       r.respondida_em
+                       r.nota_obtida, r.respondida_em, r.corrigida_em
                 FROM resposta r
                 JOIN avaliacao a ON a.id = r.avaliacao_id
                 JOIN usuario u ON u.id = r.usuario_id
                 LEFT JOIN turma t ON t.id = u.turma_id
                 JOIN questao q ON q.id = r.questao_id
                 JOIN avaliacao_questao aq ON aq.avaliacao_id = r.avaliacao_id AND aq.questao_id = r.questao_id
-                WHERE q.tipo = 'TEXTO_LIVRE' AND r.nota_obtida IS NULL
-                ORDER BY r.respondida_em ASC, r.id ASC
-                """;
+                WHERE q.tipo = 'TEXTO_LIVRE' AND %s
+                ORDER BY %s
+                """.formatted(filtro, ordenacao);
         return jdbc.query(sql, (rs, rowNum) -> {
             PendenciaCorrecao p = new PendenciaCorrecao();
             p.setRespostaId(rs.getInt("resposta_id"));
@@ -149,9 +156,14 @@ public class RespostaDAO {
             p.setEnunciado(rs.getString("enunciado"));
             p.setTextoResposta(rs.getString("texto_resposta"));
             p.setValorMaximo(rs.getBigDecimal("valor_maximo"));
+            p.setNotaObtida(rs.getBigDecimal("nota_obtida"));
             Timestamp ts = rs.getTimestamp("respondida_em");
             if (ts != null) {
                 p.setRespondidaEm(ts.toLocalDateTime());
+            }
+            Timestamp tc = rs.getTimestamp("corrigida_em");
+            if (tc != null) {
+                p.setCorrigidaEm(tc.toLocalDateTime());
             }
             return p;
         });

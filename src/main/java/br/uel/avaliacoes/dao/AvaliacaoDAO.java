@@ -281,4 +281,78 @@ public class AvaliacaoDAO {
         );
         return count != null ? count : 0;
     }
+
+    public void atualizar(Avaliacao a) {
+        String sql = """
+                UPDATE avaliacao
+                SET titulo = ?, descricao = ?, tipo = ?, data_aplicacao = ?, hora_inicio = ?, hora_fim = ?
+                WHERE id = ?
+                """;
+        jdbc.update(
+                sql,
+                a.getTitulo(),
+                a.getDescricao(),
+                a.getTipo(),
+                Date.valueOf(a.getDataAplicacao()),
+                Time.valueOf(a.getHoraInicio()),
+                Time.valueOf(a.getHoraFim()),
+                a.getId()
+        );
+    }
+
+    public int contarRespostasDaAvaliacao(int avaliacaoId) {
+        Integer count = jdbc.queryForObject(
+                "SELECT COUNT(*) FROM resposta WHERE avaliacao_id = ?",
+                Integer.class,
+                avaliacaoId
+        );
+        return count != null ? count : 0;
+    }
+
+    public int contarRespostasDaQuestaoNaAvaliacao(int avaliacaoId, int questaoId) {
+        Integer count = jdbc.queryForObject(
+                "SELECT COUNT(*) FROM resposta WHERE avaliacao_id = ? AND questao_id = ?",
+                Integer.class,
+                avaliacaoId,
+                questaoId
+        );
+        return count != null ? count : 0;
+    }
+
+    public void removerQuestoesDaAvaliacao(int avaliacaoId) {
+        jdbc.update("DELETE FROM avaliacao_questao WHERE avaliacao_id = ?", avaliacaoId);
+    }
+
+    public void removerQuestaoDaAvaliacao(int avaliacaoId, int questaoId) {
+        jdbc.update("DELETE FROM avaliacao_questao WHERE avaliacao_id = ? AND questao_id = ?", avaliacaoId, questaoId);
+    }
+
+    public void deslocarOrdemQuestoes(int avaliacaoId, int deslocamento) {
+        jdbc.update("UPDATE avaliacao_questao SET ordem = ordem + ? WHERE avaliacao_id = ?", deslocamento, avaliacaoId);
+    }
+
+    public void atualizarQuestaoDaAvaliacao(int avaliacaoId, int questaoId, int ordem, BigDecimal valor) {
+        jdbc.update(
+                "UPDATE avaliacao_questao SET ordem = ?, valor = ? WHERE avaliacao_id = ? AND questao_id = ?",
+                ordem, valor, avaliacaoId, questaoId
+        );
+    }
+
+    public Optional<String> buscarStatusUsuario(int avaliacaoId, int usuarioId) {
+        List<String> lista = jdbc.query(
+                "SELECT status FROM avaliacao_usuario WHERE avaliacao_id = ? AND usuario_id = ?",
+                (rs, rowNum) -> rs.getString("status"),
+                avaliacaoId,
+                usuarioId
+        );
+        return lista.stream().findFirst();
+    }
+
+    public int removerUsuarioAtribuido(int avaliacaoId, int usuarioId) {
+        return jdbc.update(
+                "DELETE FROM avaliacao_usuario WHERE avaliacao_id = ? AND usuario_id = ? AND status = 'PENDENTE'",
+                avaliacaoId,
+                usuarioId
+        );
+    }
 }

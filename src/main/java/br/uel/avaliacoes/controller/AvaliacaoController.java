@@ -36,6 +36,11 @@ public class AvaliacaoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.criar(payload));
     }
 
+    @PutMapping("/avaliacoes/{id}")
+    public Avaliacao atualizar(@PathVariable int id, @RequestBody Avaliacao payload) {
+        return service.atualizar(id, payload);
+    }
+
     @PostMapping("/avaliacoes/{id}/atribuir")
     public Map<String, String> atribuir(@PathVariable int id, @RequestBody AtribuicaoBody body) {
         service.atribuir(id, body.turmaId(), body.usuarioIds());
@@ -45,6 +50,12 @@ public class AvaliacaoController {
     @GetMapping("/avaliacoes/{id}/atribuidos")
     public List<AvaliacaoUsuario> listarAtribuidos(@PathVariable int id) {
         return service.listarAtribuidos(id);
+    }
+
+    @DeleteMapping("/avaliacoes/{id}/atribuidos/{usuarioId}")
+    public ResponseEntity<Void> removerAtribuido(@PathVariable int id, @PathVariable int usuarioId) {
+        service.removerAtribuicao(id, usuarioId);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/alunos/{usuarioId}/avaliacoes")

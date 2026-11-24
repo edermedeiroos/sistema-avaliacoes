@@ -10,7 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class AvaliacaoService {
@@ -44,18 +47,7 @@ public class AvaliacaoService {
 
     @Transactional
     public Avaliacao criar(Avaliacao av) {
-        if (av.getTitulo() == null || av.getTitulo().isBlank()) {
-            throw new IllegalArgumentException("O titulo da avaliacao e obrigatorio.");
-        }
-        if (av.getDataAplicacao() == null || av.getHoraInicio() == null || av.getHoraFim() == null) {
-            throw new IllegalArgumentException("Data e horario de inicio e fim sao obrigatorios.");
-        }
-        if (!av.getHoraFim().isAfter(av.getHoraInicio())) {
-            throw new IllegalArgumentException("O horario de termino deve ser posterior ao inicio.");
-        }
-        if (av.getItens() == null || av.getItens().isEmpty()) {
-            throw new IllegalArgumentException("Selecione ao menos uma questao para a avaliacao.");
-        }
+        validarAvaliacao(av);
         if (av.getCriadoPor() == null) {
             av.setCriadoPor(1);
         }
@@ -63,12 +55,6 @@ public class AvaliacaoService {
         int avaliacaoId = avaliacaoDAO.inserir(av);
         int ordem = 1;
         for (AvaliacaoQuestao item : av.getItens()) {
-            if (item.getQuestaoId() == null) {
-                throw new IllegalArgumentException("Questao invalida na montagem da avaliacao.");
-            }
-            if (item.getValor() == null || item.getValor().compareTo(BigDecimal.ZERO) <= 0) {
-                throw new IllegalArgumentException("Cada questao deve possuir valor maior que zero.");
-            }
             int itemOrdem = item.getOrdem() != null ? item.getOrdem() : ordem;
             avaliacaoDAO.adicionarQuestao(avaliacaoId, item.getQuestaoId(), itemOrdem, item.getValor());
             ordem++;
@@ -86,6 +72,95 @@ public class AvaliacaoService {
         }
 
         return buscarDetalhada(avaliacaoId, false);
+    }
+
+    @Transactional
+    public Avaliacao atualizar(int id, Avaliacao av) {
+        avaliacaoDAO.buscarPorId(id)
+                .orElseThrow(() -> new NoSuchElementException("Avaliação não encontrada."));
+        validarAvaliacao(av);
+        av.setId(id);
+        avaliacaoDAO.atualizar(av);
+
+        int totalRespostas = avaliacaoDAO.contarRespostasDaAvaliacao(id);
+        if (totalRespostas == 0) {
+            avaliacaoDAO.removerQuestoesDaAvaliacao(id);
+            int ordem = 1;
+            for (AvaliacaoQuestao item : av.getItens()) {
+                avaliacaoDAO.adicionarQuestao(id, item.getQuestaoId(), ordem++, item.getValor());
+            }
+        } else {
+            List<AvaliacaoQuestao> atuais = avaliacaoDAO.listarQuestoesDaAvaliacao(id);
+            Map<Integer, AvaliacaoQuestao> mapaAtuais = atuais.stream()
+                    .collect(Collectors.toMap(AvaliacaoQuestao::getQuestaoId, x -> x));
+            Set<Integer> novosIds = av.getItens().stream()
+                    .map(AvaliacaoQuestao::getQuestaoId)
+                    .collect(Collectors.toSet());
+
+            for (AvaliacaoQuestao atualItem : atuais) {
+                int qId = atualItem.getQuestaoId();
+                if (!novosIds.contains(qId)) {
+                    if (avaliacaoDAO.contarRespostasDaQuestaoNaAvaliacao(id, qId) > 0) {
+                        throw new IllegalStateException("Não é possível remover questões que já possuem respostas registradas.");
+                    }
+                    avaliacaoDAO.removerQuestaoDaAvaliacao(id, qId);
+                }
+            }
+
+            avaliacaoDAO.deslocarOrdemQuestoes(id, 10000);
+            int ordem = 1;
+            for (AvaliacaoQuestao item : av.getItens()) {
+                int qId = item.getQuestaoId();
+                if (mapaAtuais.containsKey(qId)) {
+                    AvaliacaoQuestao anterior = mapaAtuais.get(qId);
+                    if (avaliacaoDAO.contarRespostasDaQuestaoNaAvaliacao(id, qId) > 0
+                            && anterior.getValor().compareTo(item.getValor()) != 0) {
+                        throw new IllegalStateException("Não é possível alterar o valor de questões já respondidas.");
+                    }
+                    avaliacaoDAO.atualizarQuestaoDaAvaliacao(id, qId, ordem++, item.getValor());
+                } else {
+                    avaliacaoDAO.adicionarQuestao(id, qId, ordem++, item.getValor());
+                }
+            }
+        }
+
+        if (av.getTurmaId() != null) {
+            avaliacaoDAO.atribuirTurma(id, av.getTurmaId());
+        }
+        return buscarDetalhada(id, false);
+    }
+
+    @Transactional
+    public void removerAtribuicao(int avaliacaoId, int usuarioId) {
+        String status = avaliacaoDAO.buscarStatusUsuario(avaliacaoId, usuarioId)
+                .orElseThrow(() -> new NoSuchElementException("Atribuição não encontrada."));
+        if (!"PENDENTE".equals(status)) {
+            throw new IllegalStateException("Não é possível remover um aluno que já enviou respostas.");
+        }
+        avaliacaoDAO.removerUsuarioAtribuido(avaliacaoId, usuarioId);
+    }
+
+    private void validarAvaliacao(Avaliacao av) {
+        if (av.getTitulo() == null || av.getTitulo().isBlank()) {
+            throw new IllegalArgumentException("O título da avaliação é obrigatório.");
+        }
+        if (av.getDataAplicacao() == null || av.getHoraInicio() == null || av.getHoraFim() == null) {
+            throw new IllegalArgumentException("Data e horário de início e fim são obrigatórios.");
+        }
+        if (!av.getHoraFim().isAfter(av.getHoraInicio())) {
+            throw new IllegalArgumentException("O horário de término deve ser posterior ao início.");
+        }
+        if (av.getItens() == null || av.getItens().isEmpty()) {
+            throw new IllegalArgumentException("Selecione ao menos uma questão para a avaliação.");
+        }
+        for (AvaliacaoQuestao item : av.getItens()) {
+            if (item.getQuestaoId() == null) {
+                throw new IllegalArgumentException("Questão inválida na montagem da avaliação.");
+            }
+            if (item.getValor() == null || item.getValor().compareTo(BigDecimal.ZERO) <= 0) {
+                throw new IllegalArgumentException("Cada questão deve possuir valor maior que zero.");
+            }
+        }
     }
 
     @Transactional

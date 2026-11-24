@@ -42,6 +42,11 @@ public class RespostaController {
         return service.listarDiscursivasPendentes();
     }
 
+    @GetMapping("/correcoes")
+    public List<PendenciaCorrecao> listar(@RequestParam(defaultValue = "PENDENTES") String status) {
+        return service.listarDiscursivas(status);
+    }
+
     @PutMapping("/correcoes/{respostaId}")
     public Map<String, String> corrigir(@PathVariable int respostaId,
                                         @RequestBody NotaBody body) {

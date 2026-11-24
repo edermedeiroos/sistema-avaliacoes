@@ -99,6 +99,10 @@ public class RespostaService {
         return respostaDAO.listarDiscursivasPendentes();
     }
 
+    public List<PendenciaCorrecao> listarDiscursivas(String status) {
+        return respostaDAO.listarDiscursivas(status);
+    }
+
     @Transactional
     public void corrigirDiscursiva(int respostaId, BigDecimal nota, int professorId) {
         if (nota == null || nota.compareTo(BigDecimal.ZERO) < 0) {
