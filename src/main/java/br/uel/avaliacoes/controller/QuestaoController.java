@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,6 +41,11 @@ public class QuestaoController {
     public ResponseEntity<Questao> criar(@RequestBody Questao questao) {
         Questao criada = questaoService.criar(questao);
         return ResponseEntity.status(HttpStatus.CREATED).body(criada);
+    }
+
+    @PutMapping("/{id}")
+    public Questao atualizar(@PathVariable int id, @RequestBody Questao questao) {
+        return questaoService.atualizar(id, questao);
     }
 
     @DeleteMapping("/{id}")

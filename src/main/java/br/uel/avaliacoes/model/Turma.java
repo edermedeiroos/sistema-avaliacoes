@@ -5,6 +5,7 @@ public class Turma {
     private String codigo;
     private String nome;
     private String anoSemestre;
+    private int totalAlunos;
 
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
@@ -17,4 +18,7 @@ public class Turma {
 
     public String getAnoSemestre() { return anoSemestre; }
     public void setAnoSemestre(String anoSemestre) { this.anoSemestre = anoSemestre; }
+
+    public int getTotalAlunos() { return totalAlunos; }
+    public void setTotalAlunos(int totalAlunos) { this.totalAlunos = totalAlunos; }
 }

@@ -1,11 +1,34 @@
 let questoesCache = [];
 let turmasCache = [];
 let avaliacaoAtribuicaoId = null;
+let editandoQuestaoId = null;
 
 function toggleQuestaoForm(force) {
   const card = document.getElementById("novaQuestaoCard");
   const show = typeof force === "boolean" ? force : card.classList.contains("hidden");
   card.classList.toggle("hidden", !show);
+  if (!show) {
+    resetarFormQuestao();
+  }
+}
+
+function resetarFormQuestao() {
+  editandoQuestaoId = null;
+  document.getElementById("formNovaQuestao").reset();
+  document.getElementById("qDisciplina").value = "Banco de Dados I";
+  document.getElementById("questaoFormTitle").textContent = "Cadastrar Questão";
+  document.getElementById("btnSalvarQuestao").textContent = "Salvar Questão";
+  toggleAlternativasBox();
+}
+
+function abrirNovaQuestao() {
+  const card = document.getElementById("novaQuestaoCard");
+  if (editandoQuestaoId !== null || card.classList.contains("hidden")) {
+    resetarFormQuestao();
+    toggleQuestaoForm(true);
+  } else {
+    toggleQuestaoForm(false);
+  }
 }
 
 function toggleAlternativasBox() {
@@ -28,7 +51,7 @@ async function carregarQuestoes() {
     }
     const tbody = document.getElementById("tabelaQuestoesBody");
     if (lista.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="7" class="text-muted">Nenhuma questao encontrada.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="7" class="text-muted">Nenhuma questão encontrada.</td></tr>`;
       return;
     }
     tbody.innerHTML = lista.map(q => `
@@ -44,12 +67,49 @@ async function carregarQuestoes() {
         <td>${esc(q.dificuldade)}</td>
         <td>${q.usosEmAvaliacoes > 0 ? `${q.usosEmAvaliacoes} aval.` : `<span class="badge badge-warn">Não usada</span>`}</td>
         <td>
-          ${q.usosEmAvaliacoes === 0
-            ? `<button class="btn btn-danger btn-sm" onclick="excluirQuestao(${q.id})">Excluir</button>`
-            : `<span class="text-muted">Em uso</span>`}
+          <div class="btn-group">
+            <button class="btn btn-secondary btn-sm" onclick="editarQuestao(${q.id})">Editar</button>
+            ${q.usosEmAvaliacoes === 0
+              ? `<button class="btn btn-danger btn-sm" onclick="excluirQuestao(${q.id})">Excluir</button>`
+              : ""}
+          </div>
         </td>
       </tr>
     `).join("");
+  } catch (err) {
+    showToast(err.message, true);
+  }
+}
+
+async function editarQuestao(id) {
+  try {
+    const q = await apiGet(`/api/questoes/${id}`);
+    editandoQuestaoId = q.id;
+    document.getElementById("questaoFormTitle").textContent = `Editar Questão #${q.id}`;
+    document.getElementById("btnSalvarQuestao").textContent = "Atualizar Questão";
+    document.getElementById("qEnunciado").value = q.enunciado || "";
+    document.getElementById("qTipo").value = q.tipo || "MULTIPLA_ESCOLHA";
+    document.getElementById("qDisciplina").value = q.disciplina || "";
+    document.getElementById("qDificuldade").value = q.dificuldade || "MEDIA";
+    toggleAlternativasBox();
+
+    if (q.tipo === "MULTIPLA_ESCOLHA" && Array.isArray(q.alternativas)) {
+      q.alternativas.forEach(alt => {
+        const input = document.getElementById(`alt${alt.letra}`);
+        if (input) input.value = alt.texto || "";
+        if (alt.correta) {
+          const radio = document.querySelector(`input[name="altCorreta"][value="${alt.letra}"]`);
+          if (radio) radio.checked = true;
+        }
+      });
+    } else {
+      ["A", "B", "C", "D"].forEach(l => {
+        document.getElementById(`alt${l}`).value = "";
+      });
+    }
+
+    document.getElementById("novaQuestaoCard").classList.remove("hidden");
+    document.getElementById("novaQuestaoCard").scrollIntoView({ behavior: "smooth", block: "start" });
   } catch (err) {
     showToast(err.message, true);
   }
@@ -77,13 +137,15 @@ async function salvarQuestao(e) {
   }
 
   try {
-    await apiPost("/api/questoes", payload);
-    e.target.reset();
-    document.getElementById("qDisciplina").value = "Banco de Dados I";
-    toggleAlternativasBox();
+    const eraEdicao = editandoQuestaoId !== null;
+    if (eraEdicao) {
+      await apiPut(`/api/questoes/${editandoQuestaoId}`, payload);
+    } else {
+      await apiPost("/api/questoes", payload);
+    }
     toggleQuestaoForm(false);
     await carregarQuestoes();
-    showToast("Questão cadastrada com sucesso.");
+    showToast(eraEdicao ? "Questão atualizada com sucesso." : "Questão cadastrada com sucesso.");
   } catch (err) {
     showToast(err.message, true);
   }
@@ -335,6 +397,56 @@ async function salvarCorrecao(respostaId) {
     });
     await carregarCorrecoesPendentes();
     showToast("Nota registrada com sucesso.");
+  } catch (err) {
+    showToast(err.message, true);
+  }
+}
+
+function toggleTurmaForm(force) {
+  const card = document.getElementById("novaTurmaCard");
+  const show = typeof force === "boolean" ? force : card.classList.contains("hidden");
+  card.classList.toggle("hidden", !show);
+  if (!show) {
+    document.getElementById("formNovaTurma").reset();
+    document.getElementById("turmaSemestre").value = "2026/2";
+  }
+}
+
+async function carregarTurmas() {
+  try {
+    const lista = await apiGet("/api/turmas");
+    turmasCache = lista;
+    const tbody = document.getElementById("tabelaTurmasBody");
+    if (lista.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="5" class="text-muted">Nenhuma turma cadastrada.</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = lista.map(t => `
+      <tr>
+        <td>#${t.id}</td>
+        <td><strong>${esc(t.codigo)}</strong></td>
+        <td>${esc(t.nome)}</td>
+        <td>${esc(t.anoSemestre)}</td>
+        <td>${t.totalAlunos}</td>
+      </tr>
+    `).join("");
+  } catch (err) {
+    showToast(err.message, true);
+  }
+}
+
+async function salvarTurma(e) {
+  e.preventDefault();
+  const payload = {
+    codigo: document.getElementById("turmaCodigo").value.trim(),
+    nome: document.getElementById("turmaNome").value.trim(),
+    anoSemestre: document.getElementById("turmaSemestre").value.trim()
+  };
+  try {
+    await apiPost("/api/turmas", payload);
+    toggleTurmaForm(false);
+    await carregarTurmas();
+    showToast("Turma cadastrada com sucesso.");
   } catch (err) {
     showToast(err.message, true);
   }

@@ -152,6 +152,35 @@ public class QuestaoDAO {
         return id != null ? id : 0;
     }
 
+    public int contarRespostasDaQuestao(int questaoId) {
+        Integer count = jdbc.queryForObject(
+                "SELECT COUNT(*) FROM resposta WHERE questao_id = ?",
+                Integer.class,
+                questaoId
+        );
+        return count != null ? count : 0;
+    }
+
+    public void atualizar(Questao q) {
+        String sql = """
+                UPDATE questao
+                SET enunciado = ?, tipo = ?, disciplina = ?, dificuldade = ?
+                WHERE id = ?
+                """;
+        jdbc.update(sql, q.getEnunciado(), q.getTipo(), q.getDisciplina(), q.getDificuldade(), q.getId());
+    }
+
+    public void atualizarTextoAlternativa(int questaoId, String letra, String texto) {
+        jdbc.update(
+                "UPDATE alternativa SET texto = ? WHERE questao_id = ? AND letra = ?",
+                texto, questaoId, letra
+        );
+    }
+
+    public void excluirAlternativasPorQuestao(int questaoId) {
+        jdbc.update("DELETE FROM alternativa WHERE questao_id = ?", questaoId);
+    }
+
     public int excluir(int id) {
         return jdbc.update("DELETE FROM questao WHERE id = ?", id);
     }

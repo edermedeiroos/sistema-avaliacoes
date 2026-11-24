@@ -22,6 +22,7 @@
   <nav id="profNav" class="subnav hidden">
     <button class="nav-tab active" data-tab="prof-questoes" onclick="showProfTab('prof-questoes')">Questões</button>
     <button class="nav-tab" data-tab="prof-avaliacoes" onclick="showProfTab('prof-avaliacoes')">Avaliações</button>
+    <button class="nav-tab" data-tab="prof-turmas" onclick="showProfTab('prof-turmas')">Turmas</button>
     <button class="nav-tab" data-tab="prof-correcao" onclick="showProfTab('prof-correcao')">Correção Discursiva</button>
     <button class="nav-tab" data-tab="prof-relatorios" onclick="showProfTab('prof-relatorios')">Relatórios</button>
   </nav>
@@ -66,11 +67,11 @@
           <h1>Banco de Questões</h1>
           <p>Cadastro de questões objetivas e discursivas reutilizáveis em avaliações.</p>
         </div>
-        <button class="btn btn-primary" onclick="toggleQuestaoForm()">+ Nova Questão</button>
+        <button class="btn btn-primary" onclick="abrirNovaQuestao()">+ Nova Questão</button>
       </div>
 
       <div id="novaQuestaoCard" class="card hidden">
-        <h2>Cadastrar Questão</h2>
+        <h2 id="questaoFormTitle">Cadastrar Questão</h2>
         <form id="formNovaQuestao" onsubmit="salvarQuestao(event)">
           <div class="form-group">
             <label for="qEnunciado">Enunciado</label>
@@ -123,7 +124,7 @@
           </div>
 
           <div class="btn-group">
-            <button type="submit" class="btn btn-primary">Salvar Questão</button>
+            <button type="submit" id="btnSalvarQuestao" class="btn btn-primary">Salvar Questão</button>
             <button type="button" class="btn btn-secondary" onclick="toggleQuestaoForm(false)">Cancelar</button>
           </div>
         </form>
@@ -264,6 +265,56 @@
             </tr>
           </thead>
           <tbody id="tabelaAvaliacoesBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- PROFESSOR: TURMAS -->
+    <section id="prof-turmas" class="hidden">
+      <div class="page-header">
+        <div>
+          <h1>Turmas</h1>
+          <p>Gerencie as turmas disponíveis para atribuição de avaliações.</p>
+        </div>
+        <button class="btn btn-primary" onclick="toggleTurmaForm()">+ Nova Turma</button>
+      </div>
+
+      <div id="novaTurmaCard" class="card hidden">
+        <h2>Cadastrar Turma</h2>
+        <form id="formNovaTurma" onsubmit="salvarTurma(event)">
+          <div class="form-row">
+            <div>
+              <label for="turmaCodigo">Código</label>
+              <input type="text" id="turmaCodigo" placeholder="Ex.: CDIA-2026" required />
+            </div>
+            <div>
+              <label for="turmaNome">Nome do curso / turma</label>
+              <input type="text" id="turmaNome" placeholder="Ex.: Ciência de Dados e IA" required />
+            </div>
+            <div>
+              <label for="turmaSemestre">Ano / Semestre</label>
+              <input type="text" id="turmaSemestre" value="2026/2" required />
+            </div>
+          </div>
+          <div class="btn-group">
+            <button type="submit" class="btn btn-primary">Salvar Turma</button>
+            <button type="button" class="btn btn-secondary" onclick="toggleTurmaForm(false)">Cancelar</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Código</th>
+              <th>Nome</th>
+              <th>Ano / Semestre</th>
+              <th>Alunos Ativos</th>
+            </tr>
+          </thead>
+          <tbody id="tabelaTurmasBody"></tbody>
         </table>
       </div>
     </section>

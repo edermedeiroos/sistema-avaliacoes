@@ -69,12 +69,13 @@ function showProfTab(tabId) {
   document.querySelectorAll("#profNav .nav-tab").forEach(t => {
     t.classList.toggle("active", t.dataset.tab === tabId);
   });
-  ["prof-questoes", "prof-avaliacoes", "prof-correcao", "prof-relatorios"].forEach(id => {
+  ["prof-questoes", "prof-avaliacoes", "prof-turmas", "prof-correcao", "prof-relatorios"].forEach(id => {
     document.getElementById(id).classList.toggle("hidden", id !== tabId);
   });
 
   if (tabId === "prof-questoes") carregarQuestoes();
   if (tabId === "prof-avaliacoes") carregarTelaAvaliacoes();
+  if (tabId === "prof-turmas") carregarTurmas();
   if (tabId === "prof-correcao") carregarCorrecoesPendentes();
   if (tabId === "prof-relatorios") inicializarRelatorios();
 }
