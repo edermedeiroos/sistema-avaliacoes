@@ -16,6 +16,7 @@ Como particularidade dessa natureza, cada questão tem um valor definido por ava
 ## Modelagem e arquivos do banco
 
 - DER: [docs/der.svg](docs/der.svg)
+- MER (Esquema lógico): [docs/mer.svg](docs/mer.svg)
 - Esquema relacional e justificativa da 3FN: [docs/esquema-relacional.md](docs/esquema-relacional.md)
 - DDL: [database/schema.sql](database/schema.sql)
 - Carga de teste: [database/carga.sql](database/carga.sql)

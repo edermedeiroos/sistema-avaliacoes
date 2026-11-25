@@ -2,7 +2,7 @@
 
 ## 1. Diagrama Entidade-Relacionamento
 
-O DER esta disponivel em [der.svg](der.svg). Abaixo esta a visao geral das entidades e relacionamentos:
+O DER conceitual esta disponivel em [der.svg](der.svg) e o modelo relacional (MER) em [mer.svg](mer.svg). Abaixo esta a visao geral das entidades e relacionamentos:
 
 ```mermaid
 erDiagram

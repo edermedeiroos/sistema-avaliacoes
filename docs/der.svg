@@ -1,192 +1,352 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1260" height="820" viewBox="0 0 1260 820" font-family="Segoe UI, Arial, sans-serif">
-  <rect width="1260" height="820" fill="#ffffff"/>
-  <text x="30" y="36" font-size="20" font-weight="700" fill="#1f2937">Modelo Entidade-Relacionamento - Sistema de Avaliacoes (BD I)</text>
-  <text x="30" y="56" font-size="12" fill="#5b6573">Natureza: Avaliacao de aprendizagem | 8 tabelas normalizadas na 3FN</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1180" viewBox="0 0 1800 1180" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="1800" height="1180" fill="#ffffff"/>
 
   <defs>
     <style>
-      .tbl-box { fill: #ffffff; stroke: #334155; stroke-width: 1.5; rx: 4; }
-      .tbl-hdr { fill: #1f4d3a; }
-      .tbl-title { fill: #ffffff; font-size: 13px; font-weight: 700; }
-      .col-txt { fill: #1f2937; font-size: 11.5px; }
-      .pk { fill: #b45309; font-weight: 700; font-size: 10.5px; }
-      .fk { fill: #1d4ed8; font-weight: 700; font-size: 10.5px; }
-      .rel-line { stroke: #475467; stroke-width: 1.5; fill: none; }
-      .card-txt { fill: #111827; font-size: 11px; font-weight: 700; }
-      .rel-lbl { fill: #475467; font-size: 10.5px; font-style: italic; }
+      .title { font-size: 22px; font-weight: 700; fill: #153628; }
+      .subtitle { font-size: 13px; fill: #526071; }
+      .line { stroke: #475569; stroke-width: 1.6; fill: none; }
+      .attr-line { stroke: #64748b; stroke-width: 1.3; fill: none; }
+      .entity { fill: #f4faf6; stroke: #1f4d3a; stroke-width: 2; }
+      .entity-weak-outer { fill: #f4faf6; stroke: #1f4d3a; stroke-width: 2; }
+      .entity-weak-inner { fill: none; stroke: #1f4d3a; stroke-width: 1.5; }
+      .assoc-box { fill: #ffffff; stroke: #1f4d3a; stroke-width: 1.8; stroke-dasharray: 6,3; }
+      .diamond { fill: #e8f2ec; stroke: #1f4d3a; stroke-width: 1.8; }
+      .diamond-weak { fill: none; stroke: #1f4d3a; stroke-width: 1.4; }
+      .attr { fill: #ffffff; stroke: #64748b; stroke-width: 1.4; }
+      .attr-pk { fill: #fffbeb; stroke: #b45309; stroke-width: 1.6; }
+      .entity-txt { font-size: 13px; font-weight: 700; fill: #153628; text-anchor: middle; dominant-baseline: central; }
+      .rel-txt { font-size: 11.5px; font-weight: 700; fill: #1f4d3a; text-anchor: middle; dominant-baseline: central; }
+      .attr-txt { font-size: 11px; fill: #1e293b; text-anchor: middle; dominant-baseline: central; }
+      .attr-pk-txt { font-size: 11px; font-weight: 700; fill: #92400e; text-anchor: middle; dominant-baseline: central; text-decoration: underline; }
+      .attr-disc-txt { font-size: 11px; font-weight: 700; fill: #92400e; text-anchor: middle; dominant-baseline: central; }
+      .card { font-size: 11px; font-weight: 700; fill: #0f172a; }
+      .leg-box { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 1.4; rx: 6; }
+      .leg-txt { font-size: 11.5px; fill: #334155; }
     </style>
   </defs>
 
-  <!-- Relationship lines (drawn under tables) -->
-  <!-- turma -> usuario -->
-  <path class="rel-line" d="M 250 135 L 330 135"/>
-  <text class="card-txt" x="260" y="128">1</text>
-  <text class="card-txt" x="310" y="128">N</text>
-  <text class="rel-lbl" x="264" y="150">pertence</text>
+  <!-- Cabeçalho -->
+  <text x="32" y="38" class="title">Diagrama Entidade-Relacionamento (DER) — Sistema de Avaliações (BD I)</text>
+  <text x="32" y="60" class="subtitle">Notação Peter Chen / Heuser · Natureza: Avaliação de aprendizagem (provas, simulados e quizzes)</text>
 
-  <!-- usuario -> questao -->
-  <path class="rel-line" d="M 560 120 L 660 120"/>
-  <text class="card-txt" x="570" y="113">1</text>
-  <text class="card-txt" x="642" y="113">N</text>
-  <text class="rel-lbl" x="588" y="135">cria</text>
+  <!-- ==================== 1. LINHAS DE RELACIONAMENTO (desenhadas abaixo das formas) ==================== -->
 
-  <!-- questao -> alternativa -->
-  <path class="rel-line" d="M 900 135 L 990 135"/>
-  <text class="card-txt" x="910" y="128">1</text>
-  <text class="card-txt" x="970" y="128">N</text>
-  <text class="rel-lbl" x="920" y="150">possui</text>
+  <!-- TURMA (180,240) - PERTENCE (355,240) - USUARIO (550,240) -->
+  <line class="line" x1="180" y1="240" x2="550" y2="240"/>
 
-  <!-- usuario -> avaliacao -->
-  <path class="rel-line" d="M 445 265 L 445 340 L 145 340 L 145 380"/>
-  <text class="card-txt" x="452" y="285">1</text>
-  <text class="card-txt" x="152" y="372">N</text>
-  <text class="rel-lbl" x="270" y="333">elabora</text>
+  <!-- USUARIO (550,240) - CRIA (850,240) - QUESTAO (1150,240) -->
+  <line class="line" x1="550" y1="240" x2="1150" y2="240"/>
 
-  <!-- avaliacao -> avaliacao_questao -->
-  <path class="rel-line" d="M 270 465 L 355 465"/>
-  <text class="card-txt" x="278" y="458">1</text>
-  <text class="card-txt" x="336" y="458">N</text>
-  <text class="rel-lbl" x="284" y="480">compoe</text>
+  <!-- QUESTAO (1150,240) - POSSUI (1380,240) - ALTERNATIVA (1580,240) -->
+  <line class="line" x1="1150" y1="240" x2="1580" y2="240"/>
 
-  <!-- questao -> avaliacao_questao -->
-  <path class="rel-line" d="M 760 250 L 760 355 L 480 355 L 480 400"/>
-  <text class="card-txt" x="767" y="270">1</text>
-  <text class="card-txt" x="488" y="392">N</text>
-  <text class="rel-lbl" x="595" y="348">reutilizada em</text>
+  <!-- USUARIO (605,265) - ELABORA (715,415) - AVALIACAO (820,564) -->
+  <line class="line" x1="605" y1="265" x2="715" y2="415"/>
+  <line class="line" x1="715" y1="415" x2="820" y2="564"/>
 
-  <!-- avaliacao -> avaliacao_usuario -->
-  <path class="rel-line" d="M 145 585 L 145 640"/>
-  <text class="card-txt" x="152" y="603">1</text>
-  <text class="card-txt" x="152" y="632">N</text>
-  <text class="rel-lbl" x="154" y="618">atribuida a</text>
+  <!-- USUARIO (520,265) - REALIZA (520,590) - AVALIACAO (770,590) -->
+  <line class="line" x1="520" y1="265" x2="520" y2="590"/>
+  <line class="line" x1="605" y1="590" x2="770" y2="590"/>
 
-  <!-- usuario -> avaliacao_usuario -->
-  <path class="rel-line" d="M 410 265 L 410 305 L 25 305 L 25 710 L 40 710"/>
-  <text class="card-txt" x="416" y="285">1</text>
-  <text class="card-txt" x="28" y="700">N</text>
+  <!-- QUESTAO (1150,265) - COMPOE (1150,590) - AVALIACAO (930,590) -->
+  <line class="line" x1="1150" y1="265" x2="1150" y2="590"/>
+  <line class="line" x1="930" y1="590" x2="1065" y2="590"/>
 
-  <!-- avaliacao_usuario -> resposta -->
-  <path class="rel-line" d="M 275 710 L 580 710"/>
-  <text class="card-txt" x="284" y="703">1</text>
-  <text class="card-txt" x="560" y="703">N</text>
-  <text class="rel-lbl" x="395" y="703">registra</text>
+  <!-- REALIZA (520,634) - ENVIA (605,790) - RESPOSTA (795,924) -->
+  <line class="line" x1="520" y1="634" x2="605" y2="790"/>
+  <line class="line" x1="605" y1="790" x2="795" y2="924"/>
 
-  <!-- avaliacao_questao -> resposta -->
-  <path class="rel-line" d="M 480 540 L 480 650 L 580 650"/>
-  <text class="card-txt" x="488" y="560">1</text>
-  <text class="card-txt" x="560" y="643">N</text>
-  <text class="rel-lbl" x="492" y="635">responde</text>
+  <!-- COMPOE (1150,634) - REFERE_SE (1095,790) - RESPOSTA (905,924) -->
+  <line class="line" x1="1150" y1="634" x2="1095" y2="790"/>
+  <line class="line" x1="1095" y1="790" x2="905" y2="924"/>
 
-  <!-- alternativa -> resposta -->
-  <path class="rel-line" d="M 1110 235 L 1110 680 L 890 680"/>
-  <text class="card-txt" x="1117" y="255">1</text>
-  <text class="card-txt" x="900" y="673">N</text>
-  <text class="rel-lbl" x="970" y="673">marcada em (opcional)</text>
+  <!-- ALTERNATIVA (1580,266) - MARCA (1290,950) - RESPOSTA (930,950) -->
+  <polyline class="line" points="1580,266 1580,950 930,950"/>
 
-  <!-- usuario -> resposta (corrigida_por) -->
-  <path class="rel-line" d="M 520 265 L 520 330 L 940 330 L 940 735 L 890 735" stroke-dasharray="5,4"/>
-  <text class="rel-lbl" x="946" y="540">corrigida_por (FK)</text>
+  <!-- USUARIO (475,260) - CORRIGE (440,950) - RESPOSTA (770,950) -->
+  <polyline class="line" points="475,260 220,415 220,950 770,950"/>
 
-  <!-- TABLE: turma -->
-  <g transform="translate(40,80)">
-    <rect class="tbl-box" width="210" height="125"/>
-    <rect class="tbl-hdr" width="210" height="28" rx="3"/>
-    <text class="tbl-title" x="12" y="19">turma</text>
-    <text class="pk" x="10" y="48">PK</text><text class="col-txt" x="34" y="48">id : SERIAL</text>
-    <text class="col-txt" x="34" y="68">codigo : VARCHAR(20) UQ</text>
-    <text class="col-txt" x="34" y="88">nome : VARCHAR(100)</text>
-    <text class="col-txt" x="34" y="108">ano_semestre : VARCHAR(10)</text>
-  </g>
+  <!-- ==================== 2. LINHAS DOS ATRIBUTOS ==================== -->
 
-  <!-- TABLE: usuario -->
-  <g transform="translate(330,80)">
-    <rect class="tbl-box" width="230" height="185"/>
-    <rect class="tbl-hdr" width="230" height="28" rx="3"/>
-    <text class="tbl-title" x="12" y="19">usuario</text>
-    <text class="pk" x="10" y="48">PK</text><text class="col-txt" x="34" y="48">id : SERIAL</text>
-    <text class="col-txt" x="34" y="68">nome : VARCHAR(120)</text>
-    <text class="col-txt" x="34" y="88">email : VARCHAR(150) UQ</text>
-    <text class="col-txt" x="34" y="108">senha : VARCHAR(100)</text>
-    <text class="col-txt" x="34" y="128">perfil : VARCHAR(20)</text>
-    <text class="fk" x="10" y="148">FK</text><text class="col-txt" x="34" y="148">turma_id : INTEGER (NULL)</text>
-    <text class="col-txt" x="34" y="168">ativo : BOOLEAN</text>
-  </g>
+  <!-- Atributos de TURMA (180,240) -->
+  <line class="attr-line" x1="180" y1="240" x2="95" y2="128"/>
+  <line class="attr-line" x1="180" y1="240" x2="195" y2="112"/>
+  <line class="attr-line" x1="180" y1="240" x2="70" y2="200"/>
+  <line class="attr-line" x1="180" y1="240" x2="95" y2="320"/>
 
-  <!-- TABLE: questao -->
-  <g transform="translate(660,80)">
-    <rect class="tbl-box" width="240" height="170"/>
-    <rect class="tbl-hdr" width="240" height="28" rx="3"/>
-    <text class="tbl-title" x="12" y="19">questao</text>
-    <text class="pk" x="10" y="48">PK</text><text class="col-txt" x="34" y="48">id : SERIAL</text>
-    <text class="col-txt" x="34" y="68">enunciado : TEXT</text>
-    <text class="col-txt" x="34" y="88">tipo : VARCHAR(20)</text>
-    <text class="col-txt" x="34" y="108">disciplina : VARCHAR(80)</text>
-    <text class="col-txt" x="34" y="128">dificuldade : VARCHAR(15)</text>
-    <text class="fk" x="10" y="148">FK</text><text class="col-txt" x="34" y="148">criado_por : INTEGER</text>
-  </g>
+  <!-- Atributos de USUARIO (550,240) -->
+  <line class="attr-line" x1="550" y1="240" x2="415" y2="132"/>
+  <line class="attr-line" x1="550" y1="240" x2="500" y2="98"/>
+  <line class="attr-line" x1="550" y1="240" x2="595" y2="98"/>
+  <line class="attr-line" x1="550" y1="240" x2="685" y2="130"/>
+  <line class="attr-line" x1="550" y1="240" x2="700" y2="185"/>
+  <line class="attr-line" x1="550" y1="240" x2="400" y2="185"/>
 
-  <!-- TABLE: alternativa -->
-  <g transform="translate(990,80)">
-    <rect class="tbl-box" width="235" height="155"/>
-    <rect class="tbl-hdr" width="235" height="28" rx="3"/>
-    <text class="tbl-title" x="12" y="19">alternativa</text>
-    <text class="pk" x="10" y="48">PK</text><text class="col-txt" x="34" y="48">id : SERIAL</text>
-    <text class="fk" x="10" y="68">FK</text><text class="col-txt" x="34" y="68">questao_id : INTEGER</text>
-    <text class="col-txt" x="34" y="88">letra : CHAR(1) (UQ q_id)</text>
-    <text class="col-txt" x="34" y="108">texto : TEXT</text>
-    <text class="col-txt" x="34" y="128">correta : BOOLEAN</text>
-  </g>
+  <!-- Atributos de QUESTAO (1150,240) -->
+  <line class="attr-line" x1="1150" y1="240" x2="1015" y2="132"/>
+  <line class="attr-line" x1="1150" y1="240" x2="1100" y2="98"/>
+  <line class="attr-line" x1="1150" y1="240" x2="1195" y2="98"/>
+  <line class="attr-line" x1="1150" y1="240" x2="1285" y2="130"/>
+  <line class="attr-line" x1="1150" y1="240" x2="1305" y2="185"/>
+  <line class="attr-line" x1="1150" y1="240" x2="1000" y2="185"/>
 
-  <!-- TABLE: avaliacao -->
-  <g transform="translate(40,380)">
-    <rect class="tbl-box" width="230" height="205"/>
-    <rect class="tbl-hdr" width="230" height="28" rx="3"/>
-    <text class="tbl-title" x="12" y="19">avaliacao</text>
-    <text class="pk" x="10" y="48">PK</text><text class="col-txt" x="34" y="48">id : SERIAL</text>
-    <text class="col-txt" x="34" y="68">titulo : VARCHAR(150)</text>
-    <text class="col-txt" x="34" y="88">descricao : TEXT</text>
-    <text class="col-txt" x="34" y="108">tipo : VARCHAR(20)</text>
-    <text class="col-txt" x="34" y="128">data_aplicacao : DATE</text>
-    <text class="col-txt" x="34" y="148">hora_inicio : TIME</text>
-    <text class="col-txt" x="34" y="168">hora_fim : TIME</text>
-    <text class="fk" x="10" y="188">FK</text><text class="col-txt" x="34" y="188">criado_por : INTEGER</text>
-  </g>
+  <!-- Atributos de ALTERNATIVA (1580,240) -->
+  <line class="attr-line" x1="1580" y1="240" x2="1580" y2="145"/>
+  <line class="attr-line" x1="1580" y1="240" x2="1710" y2="195"/>
+  <line class="attr-line" x1="1580" y1="240" x2="1710" y2="290"/>
 
-  <!-- TABLE: avaliacao_questao -->
-  <g transform="translate(355,400)">
-    <rect class="tbl-box" width="250" height="140"/>
-    <rect class="tbl-hdr" width="250" height="28" rx="3"/>
-    <text class="tbl-title" x="12" y="19">avaliacao_questao</text>
-    <text class="pk" x="10" y="48">PK/FK</text><text class="col-txt" x="52" y="48">avaliacao_id : INTEGER</text>
-    <text class="pk" x="10" y="68">PK/FK</text><text class="col-txt" x="52" y="68">questao_id : INTEGER</text>
-    <text class="col-txt" x="52" y="88">ordem : INTEGER (UQ av_id)</text>
-    <text class="col-txt" x="52" y="108">valor : NUMERIC(5,2)</text>
-  </g>
+  <!-- Atributos de AVALIACAO (850,590) -->
+  <line class="attr-line" x1="850" y1="590" x2="765" y2="698"/>
+  <line class="attr-line" x1="850" y1="590" x2="850" y2="742"/>
+  <line class="attr-line" x1="850" y1="590" x2="935" y2="698"/>
+  <line class="attr-line" x1="850" y1="590" x2="720" y2="652"/>
+  <line class="attr-line" x1="850" y1="590" x2="985" y2="652"/>
+  <line class="attr-line" x1="850" y1="590" x2="775" y2="792"/>
+  <line class="attr-line" x1="850" y1="590" x2="925" y2="792"/>
 
-  <!-- TABLE: avaliacao_usuario -->
-  <g transform="translate(40,640)">
-    <rect class="tbl-box" width="235" height="135"/>
-    <rect class="tbl-hdr" width="235" height="28" rx="3"/>
-    <text class="tbl-title" x="12" y="19">avaliacao_usuario</text>
-    <text class="pk" x="10" y="48">PK/FK</text><text class="col-txt" x="52" y="48">avaliacao_id : INTEGER</text>
-    <text class="pk" x="10" y="68">PK/FK</text><text class="col-txt" x="52" y="68">usuario_id : INTEGER</text>
-    <text class="col-txt" x="52" y="88">status : VARCHAR(20)</text>
-    <text class="col-txt" x="52" y="108">enviada_em : TIMESTAMP</text>
-  </g>
+  <!-- Atributos de REALIZA (520,590) -->
+  <line class="attr-line" x1="520" y1="590" x2="345" y2="550"/>
+  <line class="attr-line" x1="520" y1="590" x2="345" y2="628"/>
 
-  <!-- TABLE: resposta -->
-  <g transform="translate(580,580)">
-    <rect class="tbl-box" width="310" height="215"/>
-    <rect class="tbl-hdr" width="310" height="28" rx="3"/>
-    <text class="tbl-title" x="12" y="19">resposta</text>
-    <text class="pk" x="10" y="48">PK</text><text class="col-txt" x="40" y="48">id : SERIAL</text>
-    <text class="fk" x="10" y="68">FK</text><text class="col-txt" x="40" y="68">avaliacao_id : INTEGER</text>
-    <text class="fk" x="10" y="88">FK</text><text class="col-txt" x="40" y="88">usuario_id : INTEGER</text>
-    <text class="fk" x="10" y="108">FK</text><text class="col-txt" x="40" y="108">questao_id : INTEGER</text>
-    <text class="fk" x="10" y="128">FK</text><text class="col-txt" x="40" y="128">alternativa_id : INTEGER (NULL)</text>
-    <text class="col-txt" x="40" y="148">texto_resposta : TEXT (NULL)</text>
-    <text class="col-txt" x="40" y="168">nota_obtida : NUMERIC(5,2) (NULL)</text>
-    <text class="fk" x="10" y="188">FK</text><text class="col-txt" x="40" y="188">corrigida_por : INTEGER (NULL)</text>
-    <text class="col-txt" x="40" y="205">corrigida_em / respondida_em</text>
+  <!-- Atributos de COMPOE (1150,590) -->
+  <line class="attr-line" x1="1150" y1="590" x2="1325" y2="550"/>
+  <line class="attr-line" x1="1150" y1="590" x2="1325" y2="628"/>
+
+  <!-- Atributos de RESPOSTA (850,950) -->
+  <line class="attr-line" x1="850" y1="950" x2="695" y2="1048"/>
+  <line class="attr-line" x1="850" y1="950" x2="790" y2="1095"/>
+  <line class="attr-line" x1="850" y1="950" x2="910" y2="1095"/>
+  <line class="attr-line" x1="850" y1="950" x2="1015" y2="1055"/>
+  <line class="attr-line" x1="850" y1="950" x2="1030" y2="1002"/>
+
+  <!-- ==================== 3. ENTIDADES E ENTIDADES ASSOCIATIVAS ==================== -->
+
+  <!-- TURMA -->
+  <rect class="entity" x="110" y="214" width="140" height="52" rx="3"/>
+  <text class="entity-txt" x="180" y="240">TURMA</text>
+
+  <!-- USUARIO -->
+  <rect class="entity" x="475" y="214" width="150" height="52" rx="3"/>
+  <text class="entity-txt" x="550" y="240">USUARIO</text>
+
+  <!-- QUESTAO -->
+  <rect class="entity" x="1075" y="214" width="150" height="52" rx="3"/>
+  <text class="entity-txt" x="1150" y="240">QUESTAO</text>
+
+  <!-- ALTERNATIVA (Entidade Fraca - retângulo duplo) -->
+  <rect class="entity-weak-outer" x="1502" y="213" width="156" height="54" rx="3"/>
+  <rect class="entity-weak-inner" x="1508" y="219" width="144" height="42" rx="2"/>
+  <text class="entity-txt" x="1580" y="240">ALTERNATIVA</text>
+
+  <!-- AVALIACAO -->
+  <rect class="entity" x="770" y="564" width="160" height="52" rx="3"/>
+  <text class="entity-txt" x="850" y="590">AVALIACAO</text>
+
+  <!-- REALIZA (Entidade Associativa) -->
+  <rect class="assoc-box" x="435" y="546" width="170" height="88" rx="4"/>
+  <polygon class="diamond" points="520,556 592,590 520,624 448,590"/>
+  <text class="rel-txt" x="520" y="590">REALIZA</text>
+
+  <!-- COMPOE (Entidade Associativa) -->
+  <rect class="assoc-box" x="1065" y="546" width="170" height="88" rx="4"/>
+  <polygon class="diamond" points="1150,556 1222,590 1150,624 1078,590"/>
+  <text class="rel-txt" x="1150" y="590">COMPOE</text>
+
+  <!-- RESPOSTA -->
+  <rect class="entity" x="770" y="924" width="160" height="52" rx="3"/>
+  <text class="entity-txt" x="850" y="950">RESPOSTA</text>
+
+  <!-- ==================== 4. LOSANGOS DE RELACIONAMENTO ==================== -->
+
+  <!-- PERTENCE -->
+  <polygon class="diamond" points="355,208 422,240 355,272 288,240"/>
+  <text class="rel-txt" x="355" y="240">PERTENCE</text>
+
+  <!-- CRIA -->
+  <polygon class="diamond" points="850,208 912,240 850,272 788,240"/>
+  <text class="rel-txt" x="850" y="240">CRIA</text>
+
+  <!-- POSSUI (Relacionamento Identificador - losango duplo) -->
+  <polygon class="diamond" points="1380,206 1448,240 1380,274 1312,240"/>
+  <polygon class="diamond-weak" points="1380,213 1438,240 1380,267 1322,240"/>
+  <text class="rel-txt" x="1380" y="240">POSSUI</text>
+
+  <!-- ELABORA -->
+  <polygon class="diamond" points="715,383 780,415 715,447 650,415"/>
+  <text class="rel-txt" x="715" y="415">ELABORA</text>
+
+  <!-- ENVIA -->
+  <polygon class="diamond" points="605,758 668,790 605,822 542,790"/>
+  <text class="rel-txt" x="605" y="790">ENVIA</text>
+
+  <!-- REFERE_SE -->
+  <polygon class="diamond" points="1095,758 1170,790 1095,822 1020,790"/>
+  <text class="rel-txt" x="1095" y="790">REFERE_SE</text>
+
+  <!-- MARCA -->
+  <polygon class="diamond" points="1290,918 1356,950 1290,982 1224,950"/>
+  <text class="rel-txt" x="1290" y="950">MARCA</text>
+
+  <!-- CORRIGE -->
+  <polygon class="diamond" points="440,918 508,950 440,982 372,950"/>
+  <text class="rel-txt" x="440" y="950">CORRIGE</text>
+
+  <!-- ==================== 5. ATRIBUTOS (ELIPSES) ==================== -->
+
+  <!-- TURMA -->
+  <ellipse class="attr-pk" cx="95" cy="128" rx="34" ry="16"/>
+  <text class="attr-pk-txt" x="95" y="128">id</text>
+  <ellipse class="attr" cx="195" cy="112" rx="44" ry="16"/>
+  <text class="attr-txt" x="195" y="112">codigo</text>
+  <ellipse class="attr" cx="70" cy="200" rx="42" ry="16"/>
+  <text class="attr-txt" x="70" y="200">nome</text>
+  <ellipse class="attr" cx="95" cy="320" rx="58" ry="16"/>
+  <text class="attr-txt" x="95" y="320">ano_semestre</text>
+
+  <!-- USUARIO -->
+  <ellipse class="attr-pk" cx="415" cy="132" rx="34" ry="16"/>
+  <text class="attr-pk-txt" x="415" y="132">id</text>
+  <ellipse class="attr" cx="500" cy="98" rx="42" ry="16"/>
+  <text class="attr-txt" x="500" y="98">nome</text>
+  <ellipse class="attr" cx="595" cy="98" rx="42" ry="16"/>
+  <text class="attr-txt" x="595" y="98">email</text>
+  <ellipse class="attr" cx="685" cy="130" rx="42" ry="16"/>
+  <text class="attr-txt" x="685" y="130">senha</text>
+  <ellipse class="attr" cx="700" cy="185" rx="40" ry="16"/>
+  <text class="attr-txt" x="700" y="185">perfil</text>
+  <ellipse class="attr" cx="400" cy="185" rx="38" ry="16"/>
+  <text class="attr-txt" x="400" y="185">ativo</text>
+
+  <!-- QUESTAO -->
+  <ellipse class="attr-pk" cx="1015" cy="132" rx="34" ry="16"/>
+  <text class="attr-pk-txt" x="1015" y="132">id</text>
+  <ellipse class="attr" cx="1100" cy="98" rx="50" ry="16"/>
+  <text class="attr-txt" x="1100" y="98">enunciado</text>
+  <ellipse class="attr" cx="1195" cy="98" rx="36" ry="16"/>
+  <text class="attr-txt" x="1195" y="98">tipo</text>
+  <ellipse class="attr" cx="1285" cy="130" rx="48" ry="16"/>
+  <text class="attr-txt" x="1285" y="130">disciplina</text>
+  <ellipse class="attr" cx="1305" cy="185" rx="52" ry="16"/>
+  <text class="attr-txt" x="1305" y="185">dificuldade</text>
+  <ellipse class="attr" cx="1000" cy="185" rx="50" ry="16"/>
+  <text class="attr-txt" x="1000" y="185">criado_em</text>
+
+  <!-- ALTERNATIVA (letra = discriminador com sublinhado tracejado) -->
+  <ellipse class="attr-pk" cx="1580" cy="145" rx="42" ry="16"/>
+  <text class="attr-disc-txt" x="1580" y="143">letra</text>
+  <line x1="1564" y1="151" x2="1596" y2="151" stroke="#92400e" stroke-width="1.4" stroke-dasharray="3,2"/>
+  <ellipse class="attr" cx="1710" cy="195" rx="42" ry="16"/>
+  <text class="attr-txt" x="1710" y="195">texto</text>
+  <ellipse class="attr" cx="1710" cy="290" rx="44" ry="16"/>
+  <text class="attr-txt" x="1710" y="290">correta</text>
+
+  <!-- AVALIACAO -->
+  <ellipse class="attr-pk" cx="765" cy="698" rx="34" ry="16"/>
+  <text class="attr-pk-txt" x="765" y="698">id</text>
+  <ellipse class="attr" cx="850" cy="742" rx="42" ry="16"/>
+  <text class="attr-txt" x="850" y="742">titulo</text>
+  <ellipse class="attr" cx="935" cy="698" rx="48" ry="16"/>
+  <text class="attr-txt" x="935" y="698">descricao</text>
+  <ellipse class="attr" cx="720" cy="652" rx="36" ry="16"/>
+  <text class="attr-txt" x="720" y="652">tipo</text>
+  <ellipse class="attr" cx="985" cy="652" rx="60" ry="16"/>
+  <text class="attr-txt" x="985" y="652">data_aplicacao</text>
+  <ellipse class="attr" cx="775" cy="792" rx="50" ry="16"/>
+  <text class="attr-txt" x="775" y="792">hora_inicio</text>
+  <ellipse class="attr" cx="925" cy="792" rx="46" ry="16"/>
+  <text class="attr-txt" x="925" y="792">hora_fim</text>
+
+  <!-- REALIZA -->
+  <ellipse class="attr" cx="345" cy="550" rx="42" ry="16"/>
+  <text class="attr-txt" x="345" y="550">status</text>
+  <ellipse class="attr" cx="345" cy="628" rx="52" ry="16"/>
+  <text class="attr-txt" x="345" y="628">enviada_em</text>
+
+  <!-- COMPOE (Particularidade: valor por questão na avaliação) -->
+  <ellipse class="attr" cx="1325" cy="550" rx="42" ry="16"/>
+  <text class="attr-txt" x="1325" y="550">ordem</text>
+  <ellipse class="attr" cx="1325" cy="628" rx="40" ry="16"/>
+  <text class="attr-txt" x="1325" y="628">valor</text>
+
+  <!-- RESPOSTA -->
+  <ellipse class="attr-pk" cx="695" cy="1048" rx="34" ry="16"/>
+  <text class="attr-pk-txt" x="695" y="1048">id</text>
+  <ellipse class="attr" cx="790" cy="1095" rx="58" ry="16"/>
+  <text class="attr-txt" x="790" y="1095">texto_resposta</text>
+  <ellipse class="attr" cx="910" cy="1095" rx="52" ry="16"/>
+  <text class="attr-txt" x="910" y="1095">nota_obtida</text>
+  <ellipse class="attr" cx="1015" cy="1055" rx="58" ry="16"/>
+  <text class="attr-txt" x="1015" y="1055">respondida_em</text>
+  <ellipse class="attr" cx="1030" cy="1002" rx="54" ry="16"/>
+  <text class="attr-txt" x="1030" y="1002">corrigida_em</text>
+
+  <!-- ==================== 6. CARDINALIDADES (min, max) ==================== -->
+  <!-- PERTENCE -->
+  <text class="card" x="256" y="230">(0,N)</text>
+  <text class="card" x="442" y="230">(0,1)</text>
+
+  <!-- CRIA -->
+  <text class="card" x="633" y="230">(0,N)</text>
+  <text class="card" x="1042" y="230">(1,1)</text>
+
+  <!-- POSSUI -->
+  <text class="card" x="1233" y="230">(0,N)</text>
+  <text class="card" x="1470" y="230">(1,1)</text>
+
+  <!-- ELABORA -->
+  <text class="card" x="615" y="285">(0,N)</text>
+  <text class="card" x="772" y="555">(1,1)</text>
+
+  <!-- REALIZA -->
+  <text class="card" x="527" y="286">(0,N)</text>
+  <text class="card" x="735" y="581">(0,N)</text>
+
+  <!-- COMPOE -->
+  <text class="card" x="1157" y="286">(0,N)</text>
+  <text class="card" x="938" y="581">(1,N)</text>
+
+  <!-- ENVIA -->
+  <text class="card" x="528" y="654">(0,N)</text>
+  <text class="card" x="748" y="914">(1,1)</text>
+
+  <!-- REFERE_SE -->
+  <text class="card" x="1156" y="654">(0,N)</text>
+  <text class="card" x="920" y="914">(1,1)</text>
+
+  <!-- MARCA -->
+  <text class="card" x="1588" y="288">(0,N)</text>
+  <text class="card" x="940" y="941">(0,1)</text>
+
+  <!-- CORRIGE -->
+  <text class="card" x="444" y="264">(0,N)</text>
+  <text class="card" x="735" y="941">(0,1)</text>
+
+  <!-- ==================== 7. LEGENDA ==================== -->
+  <g transform="translate(32, 995)">
+    <rect class="leg-box" width="470" height="152"/>
+    <text x="16" y="24" font-size="13" font-weight="700" fill="#153628">Legenda (Notação DER)</text>
+
+    <rect class="entity" x="16" y="40" width="52" height="22" rx="2"/>
+    <text class="leg-txt" x="78" y="55">Entidade</text>
+
+    <rect class="entity-weak-outer" x="16" y="72" width="52" height="24" rx="2"/>
+    <rect class="entity-weak-inner" x="20" y="76" width="44" height="16" rx="1"/>
+    <text class="leg-txt" x="78" y="88">Entidade fraca</text>
+
+    <polygon class="diamond" points="42,106 68,121 42,136 16,121"/>
+    <text class="leg-txt" x="78" y="125">Relacionamento (duplo = identificador)</text>
+
+    <rect class="assoc-box" x="255" y="38" width="54" height="26" rx="2"/>
+    <polygon class="diamond" points="282,42 303,51 282,60 261,51"/>
+    <text class="leg-txt" x="318" y="55">Entidade associativa</text>
+
+    <ellipse class="attr" cx="282" cy="84" rx="26" ry="12"/>
+    <text class="leg-txt" x="318" y="88">Atributo simples</text>
+
+    <ellipse class="attr-pk" cx="282" cy="121" rx="26" ry="12"/>
+    <text class="attr-pk-txt" x="282" y="121">id</text>
+    <text class="leg-txt" x="318" y="120">Identificador (tracejado</text>
+    <text class="leg-txt" x="318" y="135">= discriminador)</text>
   </g>
 </svg>
